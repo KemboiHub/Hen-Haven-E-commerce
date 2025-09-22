@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
             <div className="relative">
               <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
                 <img 
-                  src="https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg" 
+                  src="https://www.pexels.com/photo/chickens-on-a-farm-21482856/" 
                   alt="Happy chickens on farm"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
