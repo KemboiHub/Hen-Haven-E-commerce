@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Shield, Truck, Award } from 'lucide-react';
+import poultryImg from '../assets/images/poultry.jpg';
 
 const Hero: React.FC = () => {
   return (
@@ -21,10 +22,11 @@ const Hero: React.FC = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center group">
+                <a href="#shop" className="href"> <button className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center group">
                   Shop Now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </button>
+                </button></a>
+               
                 <button className="border-2 border-sage-600 text-sage-600 px-8 py-4 rounded-lg font-semibold hover:bg-sage-600 hover:text-white transition-all duration-300">
                   Learn More
                 </button>
@@ -51,7 +53,7 @@ const Hero: React.FC = () => {
             <div className="relative">
               <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
                 <img 
-                  src="https://www.pexels.com/photo/chickens-on-a-farm-21482856/" 
+                  src={poultryImg}
                   alt="Happy chickens on farm"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
