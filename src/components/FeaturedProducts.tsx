@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
-
 const FeaturedProducts: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
 
   const products = [
     {
       id: 1,
-      name: "Rhode Island Red Chicks",
-      category: "1 Week Old",
+      name: "Kenbro Improved Kienyeji",
+      category: "Layers",
       price: 15.99,
       originalPrice: 19.99,
       rating: 4.9,
       reviews: 124,
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg",
       badge: "Best Seller",
       description: "Hardy, friendly breed perfect for beginners"
     },
@@ -41,12 +40,12 @@ const FeaturedProducts: React.FC = () => {
     },
     {
       id: 4,
-      name: "Bantam Chickens",
-      category: "2 Months Old",
+      name: "Kari Improved Kienyeji",
+      category: "Broilers",
       price: 45.99,
       rating: 4.9,
       reviews: 67,
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg",
       badge: "Limited",
       description: "Adorable miniature chickens, perfect for small spaces"
     }
