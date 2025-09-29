@@ -54,28 +54,28 @@ const FeedsSection = () => {
       title: "Starter Feed (0-8 weeks)",
       description: "High-protein feed for rapid growth",
       image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
-      price: "$45",
+      price: "Ksh 45",
       features: ["20-24% protein", "Essential vitamins", "Easy digestion"]
     },
     {
       title: "Grower Feed (8-18 weeks)",
       description: "Balanced nutrition for steady development",
       image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
-      price: "$42",
+      price: "Ksh 42",
       features: ["16-18% protein", "Calcium boost", "Growth optimization"]
     },
     {
       title: "Layer Feed (18+ weeks)",
       description: "Specialized feed for egg production",
       image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
-      price: "$48",
+      price: "Ksh 48",
       features: ["16-18% protein", "High calcium", "Shell strength"]
     },
     {
       title: "Broiler Feed",
       description: "High-energy feed for meat production",
       image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
-      price: "$50",
+      price: "Ksh 50",
       features: ["22-24% protein", "Fast growth", "Efficient conversion"]
     }
   ];
