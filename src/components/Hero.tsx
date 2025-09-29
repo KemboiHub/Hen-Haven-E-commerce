@@ -1,8 +1,12 @@
 import React from 'react';
-import { ArrowRight, Shield, Truck, Award } from 'lucide-react';
+import { ArrowRight, Shield, Truck, Award, Phone } from 'lucide-react';
 import poultryImg from '../assets/images/poultry.jpg';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  setCurrentSection: (section: string) => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ setCurrentSection }) => {
   return (
     <section className="relative overflow-hidden">
       {/* Main Hero */}
@@ -22,13 +26,16 @@ const Hero: React.FC = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="#shop" className="href"> <button className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center group">
+                <button 
+                  onClick={() => setCurrentSection('shop')}
+                  className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center group"
+                >
                   Shop Now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </button></a>
-               
-                <button className="border-2 border-sage-600 text-sage-600 px-8 py-4 rounded-lg font-semibold hover:bg-sage-600 hover:text-white transition-all duration-300">
-                  Learn More
+                </button>
+                <button onClick={() => setCurrentSection('contact')}
+                className="border-2 border-sage-600 text-sage-600 px-8 py-4 rounded-lg font-semibold hover:bg-sage-600 hover:text-white transition-all duration-300 flex items-center justify-center gap-2">
+                  <Phone className="h-6 w-6" /> CONTACT US
                 </button>
               </div>
 

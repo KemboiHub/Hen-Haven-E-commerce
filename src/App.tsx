@@ -26,7 +26,7 @@ function App() {
       default:
         return (
           <>
-            <Hero />
+            <Hero setCurrentSection={setCurrentSection} />
             <FeaturedProducts />
             <CategorySection />
             <VaccineSection />
