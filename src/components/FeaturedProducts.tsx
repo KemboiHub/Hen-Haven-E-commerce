@@ -50,6 +50,100 @@ const FeaturedProducts: React.FC = () => {
       image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg",
       badge: "Limited",
       description: "Adorable miniature chickens, perfect for small spaces"
+    },
+    {
+      id: 5,
+      name: "Kari Improved Kienyeji",
+      category: "Broilers",
+      price: "Ksh 1200",
+      rating: 4.9,
+      reviews: 67,
+      image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg",
+      badge: "Limited",
+      description: "Adorable miniature chickens, perfect for small spaces"
+    },
+        {
+      id: 1,
+      name: "Kenbro Improved Kienyeji",
+      category: "Layers",
+      price: "Ksh 999",
+      originalPrice: "Ksh 1200",
+      rating: 4.9,
+      reviews: 124,
+      image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg",
+      badge: "Best Seller",
+      description: "Hardy, friendly breed perfect for beginners"
+    },
+    {
+      id: 2,
+      name: "Farm Fresh Eggs",
+      category: "Dozen",
+      price: "Ksh 750",
+      originalPrice: "Ksh 900",
+      rating: 4.8,
+      reviews: 89,
+      image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg",
+      badge: "Farm Fresh",
+      description: "Free-range, organic eggs from happy hens"
+    },
+    {
+      id: 3,
+      name: "Premium Layer Feed",
+      category: "20lb Bag",
+      price: "Ksh 1500",
+      originalPrice: "Ksh 1800",
+      rating: 4.7,
+      reviews: 156,
+      image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
+      badge: "Premium",
+      description: "Complete nutrition for optimal egg production"
+    },
+        {
+      id: 5,
+      name: "Kari Improved Kienyeji",
+      category: "Broilers",
+      price: "Ksh 1200",
+      rating: 4.9,
+      reviews: 67,
+      image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg",
+      badge: "Limited",
+      description: "Adorable miniature chickens, perfect for small spaces"
+    },
+        {
+      id: 1,
+      name: "Kenbro Improved Kienyeji",
+      category: "Layers",
+      price: "Ksh 999",
+      originalPrice: "Ksh 1200",
+      rating: 4.9,
+      reviews: 124,
+      image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg",
+      badge: "Best Seller",
+      description: "Hardy, friendly breed perfect for beginners"
+    },
+    {
+      id: 2,
+      name: "Farm Fresh Eggs",
+      category: "Dozen",
+      price: "Ksh 750",
+      originalPrice: "Ksh 900",
+      rating: 4.8,
+      reviews: 89,
+      image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg",
+      badge: "Farm Fresh",
+      description: "Free-range, organic eggs from happy hens"
+    },
+    {
+      id: 3,
+      name: "Premium Layer Feed",
+      category: "20lb Bag",
+      price: "Ksh 1500",
+      originalPrice: "Ksh 1800",
+      rating: 4.7,
+      reviews: 156,
+      image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
+      badge: "Premium",
+      description: "Complete nutrition for optimal egg production"
     }
   ];
 
