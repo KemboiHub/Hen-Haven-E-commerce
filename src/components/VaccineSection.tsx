@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Shield, Thermometer, Syringe, Heart, AlertCircle, CheckCircle } from 'lucide-react';
 
-const VaccineSection: React.FC = () => {
+interface VaccineSectionProps {
+  setCurrentSection: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const VaccineSection: React.FC<VaccineSectionProps> = ({ setCurrentSection }) => {
   const [activeTab, setActiveTab] = useState('vaccines');
 
   const vaccines = [
@@ -229,10 +233,20 @@ const VaccineSection: React.FC = () => {
             Our veterinary specialists are available 24/7 to help diagnose and treat your poultry health concerns
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors">
+            <button
+              onClick={() => {
+                setCurrentSection('contact');
+                setTimeout(() => document.getElementById('send-message-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
+              }}
+              className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors"
+            >
               Schedule Consultation
             </button>
-            <button className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-sage-800 transition-colors">
+            <button 
+             onClick={() => {
+                setCurrentSection('contact');
+                setTimeout(() => document.getElementById('emergency-support')?.scrollIntoView({ behavior: 'smooth' }), 100);
+              }}className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-sage-800 transition-colors">
               Emergency Hotline
             </button>
           </div>

@@ -18,7 +18,7 @@ function App() {
       case 'feeds':
         return <FeedsSection />;
       case 'vaccine':
-        return <VaccineSection />;
+        return <VaccineSection setCurrentSection={setCurrentSection} />;
       case 'contact':
         return <ContactSection />;
       case 'blog':
@@ -29,7 +29,7 @@ function App() {
             <Hero setCurrentSection={setCurrentSection} />
             <FeaturedProducts />
             <CategorySection />
-            <VaccineSection />
+            <VaccineSection setCurrentSection={setCurrentSection} />
             <BlogSection />
           </>
         );
@@ -88,7 +88,7 @@ const FeedsSection = () => {
           Nutritionally balanced feeds for every stage of your poultry's growth journey
         </p>
       </div>
-      
+
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {feedCategories.map((feed, index) => (
           <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">

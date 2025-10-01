@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
       {/* Top Bar */}
       <div className="bg-sage-800 text-white py-2 px-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
-          <span>Free shipping on orders over $100 | Call us: (555) 123-HENS</span>
+          <span>Free shipping on orders over $100 | Call us: (+254) 792151754</span>
           <div className="flex items-center space-x-4">
             <span>Follow us for daily farm updates</span>
           </div>

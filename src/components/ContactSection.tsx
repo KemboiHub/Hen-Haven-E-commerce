@@ -81,7 +81,7 @@ const ContactSection: React.FC = () => {
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <div className="bg-sage-50 p-8 rounded-2xl">
+            <div id="send-message-section" className="bg-sage-50 p-8 rounded-2xl">
               <h3 className="text-2xl font-bold text-sage-800 mb-6">Send us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -216,7 +216,7 @@ const ContactSection: React.FC = () => {
             ))}
 
             {/* Emergency Contact */}
-            <div className="bg-red-50 border-2 border-red-200 p-6 rounded-xl">
+            <div id="emergency-support" className="bg-red-50 border-2 border-red-200 p-6 rounded-xl">
               <h3 className="text-xl font-semibold text-red-800 mb-2">Emergency Support</h3>
               <p className="text-red-600 mb-4">
                 For urgent health concerns with your birds, call our 24/7 emergency line.
