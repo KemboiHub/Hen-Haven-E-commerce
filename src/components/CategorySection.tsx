@@ -7,7 +7,7 @@ const CategorySection: React.FC = () => {
       title: "Baby Chicks",
       subtitle: "1 Day - 1 Month Old",
       description: "Start your flock with healthy, vaccinated chicks",
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/32314325/pexels-photo-32314325.jpeg",
       items: ["Day-old chicks", "1 week old", "2 weeks old", "1 month old"],
       color: "bg-yellow-50 border-yellow-200"
     },
@@ -15,7 +15,7 @@ const CategorySection: React.FC = () => {
       title: "Growing Birds",
       subtitle: "1-3 Months Old",
       description: "Well-developed birds ready for your coop",
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/11196406/pexels-photo-11196406.jpeg",
       items: ["1 month old", "2 months old", "3 months old", "Mixed ages"],
       color: "bg-green-50 border-green-200"
     },
@@ -23,7 +23,7 @@ const CategorySection: React.FC = () => {
       title: "Production Ready",
       subtitle: "Layers & Broilers",
       description: "Mature birds ready for eggs and meat production",
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/9547839/pexels-photo-9547839.jpeg",
       items: ["Layer hens", "Broiler chickens", "Breeding stock", "Heritage breeds"],
       color: "bg-brown-50 border-brown-200"
     },
@@ -31,7 +31,7 @@ const CategorySection: React.FC = () => {
       title: "Farm Fresh Eggs",
       subtitle: "Daily Collection",
       description: "Fresh, organic eggs from free-range hens",
-      image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg",
+      image: "https://images.pexels.com/photos/17119866/pexels-photo-17119866.jpeg",
       items: ["Dozen eggs", "Half dozen", "Jumbo eggs", "Brown eggs"],
       color: "bg-orange-50 border-orange-200"
     }
@@ -97,11 +97,11 @@ const CategorySection: React.FC = () => {
           <h3 className="text-3xl font-bold text-sage-800 text-center mb-8">Popular Breeds</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
-              'Rhode Island Red',
-              'Leghorn',
-              'Buff Orpington',
-              'Barred Rock',
-              'Ameraucana',
+              'Kari Improved Kienyeji',
+              'Kenbro Improved Kienyeji',
+              'Kuroiler',
+              'Sasso breeds',
+              'Rainbow Rooster',
               'Sussex'
             ].map((breed, index) => (
               <div key={index} className="text-center group cursor-pointer">

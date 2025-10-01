@@ -51,11 +51,11 @@ const Footer: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center text-sage-200">
                 <MapPin className="h-5 w-5 mr-3 text-sage-400" />
-                <span>123 Hen Haven Lane, Farmville, State 12345</span>
+                <span>Molo along Nakuru-Eldoret highway</span>
               </div>
               <div className="flex items-center text-sage-200">
                 <Phone className="h-5 w-5 mr-3 text-sage-400" />
-                <span>(555) 123-HENS</span>
+                <span>(+254) 792151754</span>
               </div>
               <div className="flex items-center text-sage-200">
                 <Mail className="h-5 w-5 mr-3 text-sage-400" />
@@ -152,7 +152,7 @@ const Footer: React.FC = () => {
                 <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
               </div>
               <div className="text-sm">
-                © 2024 Hen Haven. All rights reserved.
+                © 2026 Hen Haven. All rights reserved.
               </div>
             </div>
           </div>

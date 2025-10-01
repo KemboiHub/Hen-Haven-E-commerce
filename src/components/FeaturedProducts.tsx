@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 const FeaturedProducts: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [showAll, setShowAll] = useState(false);
 
   const products = [
     {
@@ -155,6 +156,8 @@ const FeaturedProducts: React.FC = () => {
     );
   };
 
+  const displayedProducts = showAll ? products : products.slice(0, 4);
+
   return (
     <section className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -168,7 +171,7 @@ const FeaturedProducts: React.FC = () => {
 
         {/* Products Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map((product) => (
+          {displayedProducts.map((product) => (
             <div key={product.id} className="group relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               {/* Product Image */}
               <div className="relative overflow-hidden">
@@ -246,9 +249,9 @@ const FeaturedProducts: React.FC = () => {
                 {/* Price & Add to Cart */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <span className="text-2xl font-bold text-sage-800">${product.price}</span>
+                    <span className="text-2xl font-bold text-sage-800">{product.price}</span>
                     {product.originalPrice && (
-                      <span className="text-sm text-sage-400 line-through">${product.originalPrice}</span>
+                      <span className="text-sm text-sage-400 line-through">{product.originalPrice}</span>
                     )}
                   </div>
                   <button className="p-2 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-colors">
@@ -262,8 +265,11 @@ const FeaturedProducts: React.FC = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105">
-            View All Products
+          <button 
+            onClick={() => setShowAll(!showAll)}
+            className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105"
+          >
+            {showAll ? 'Show Less' : 'View All Products'}
           </button>
         </div>
       </div>
