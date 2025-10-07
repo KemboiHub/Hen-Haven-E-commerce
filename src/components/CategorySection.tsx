@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 const CategorySection: React.FC = () => {
+  const Breeds = ['Kenbro Improved Kienyeji', 'Kari Improved Kienyeji','Kuroiler', 'Sasso breeds', 'Rainbow Rooster', 'Sussex'];
+
   const categories = [
     {
       title: "Baby Chicks",
-      subtitle: "1 Day - 1 Month Old",
+      subtitle: "1 Day - 3 Weeks Old",
       description: "Start your flock with healthy, vaccinated chicks",
       image: "https://images.pexels.com/photos/32314325/pexels-photo-32314325.jpeg",
-      items: ["Day-old chicks", "1 week old", "2 weeks old", "1 month old"],
+      items: ["1 day old", "1 week old", "2 weeks old", "3 weeks old"],
       color: "bg-yellow-50 border-yellow-200"
     },
     {
@@ -37,12 +40,61 @@ const CategorySection: React.FC = () => {
     }
   ];
 
-  return (
-    <section className="py-16 px-4 bg-sage-50">
-      <div className="max-w-7xl mx-auto">
+  const CategoryPart: React.FC<{ title: string; breeds: string[] }> = ({ title, breeds }) => {
+    const { addToCart } = useCart();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<any>(null);
+    const [formData, setFormData] = useState({ age: '', type: '', breed: '', item: '', quantity: 1 });
+
+    const getPrice = (category: string, selections: any) => {
+      let base = 0;
+      if (category === "Baby Chicks") {
+        const prices: { [key: string]: number } = { "1 day old": 50, "1 week old": 60, "2 weeks old": 70, "3 weeks old": 75 };
+        base = prices[selections.age] || 50;
+      } else if (category === "Growing Birds") {
+        const prices: { [key: string]: number } = { "1 month old": 200, "2 months old": 300, "3 months old": 400, "Mixed ages": 350 };
+        base = prices[selections.age] || 200;
+      } else if (category === "Production Ready") {
+        base = selections.type === "Layer" ? 1000 : 1200;
+      } else if (category === "Farm Fresh Eggs") {
+        const prices: { [key: string]: number } = { "Dozen eggs": 300, "Half dozen": 180, "Jumbo eggs": 350, "Brown eggs": 320 };
+        base = prices[selections.item] || 300;
+      }
+      return base * selections.quantity;
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const price = getPrice(selectedCategory.title, formData);
+      let name = selectedCategory.title;
+      if (selectedCategory.title === "Production Ready") {
+        name += ` - ${formData.type} (${formData.breed})`;
+      } else if (selectedCategory.title === "Baby Chicks" || selectedCategory.title === "Growing Birds") {
+        name += ` - ${formData.age} (${formData.breed})`;
+      } else {
+        name += ` - ${formData.age || formData.item}`;
+      }
+      const product = {
+        id: Date.now(),
+        name,
+        category: selectedCategory.title,
+        price: `KSh ${price}`,
+        rating: 5,
+        reviews: 0,
+        image: selectedCategory.image,
+        badge: "New",
+        description: selectedCategory.description
+      };
+      addToCart(product, formData.quantity);
+      setModalOpen(false);
+      setFormData({ age: '', type: '', breed: '', item: '', quantity: 1 });
+    };
+
+    return (
+      <>
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-sage-800 mb-4">Shop by Category</h2>
+          <h2 className="text-4xl font-bold text-sage-800 mb-4">{title}</h2>
           <p className="text-xl text-sage-600 max-w-3xl mx-auto">
             From day-old chicks to mature laying hens, find exactly what you need for your poultry operation
           </p>
@@ -51,12 +103,12 @@ const CategorySection: React.FC = () => {
         {/* Categories Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category, index) => (
-            <div key={index} className="group cursor-pointer">
+            <div key={index} id={category.title.toLowerCase().replace(/\s+/g, '-')} className="group cursor-pointer">
               <div className={`${category.color} border-2 rounded-2xl p-6 h-full transition-all duration-300 hover:scale-105 hover:shadow-xl`}>
                 {/* Image */}
                 <div className="mb-6 overflow-hidden rounded-xl">
-                  <img 
-                    src={category.image} 
+                  <img
+                    src={category.image}
                     alt={category.title}
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -68,7 +120,7 @@ const CategorySection: React.FC = () => {
                     <h3 className="text-2xl font-bold text-sage-800 mb-1">{category.title}</h3>
                     <p className="text-sage-600 font-medium">{category.subtitle}</p>
                   </div>
-                  
+
                   <p className="text-sage-700">{category.description}</p>
 
                   {/* Items List */}
@@ -82,7 +134,7 @@ const CategorySection: React.FC = () => {
                   </ul>
 
                   {/* Shop Button */}
-                  <button className="w-full mt-6 bg-sage-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-sage-700 transition-colors flex items-center justify-center group">
+                  <button onClick={() => { setSelectedCategory(category); setModalOpen(true); }} className="w-full mt-6 bg-sage-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-sage-700 transition-colors flex items-center justify-center group">
                     Shop Now
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -91,6 +143,96 @@ const CategorySection: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {modalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+              <h2 className="text-2xl font-bold mb-4">Shop {selectedCategory.title}</h2>
+              <form onSubmit={handleSubmit}>
+                {selectedCategory.title === "Baby Chicks" && (
+                  <>
+                    <div className="mb-4">
+                      <label className="block mb-2">Age</label>
+                      <select value={formData.age} onChange={(e) => setFormData({...formData, age: e.target.value})} required className="w-full p-2 border rounded">
+                        <option value="">Select age</option>
+                        {selectedCategory.items.map((item: string) => <option key={item} value={item}>{item}</option>)}
+                      </select>
+                    </div>
+                    <div className="mb-4">
+                      <label className="block mb-2">Breed</label>
+                      <select value={formData.breed} onChange={(e) => setFormData({...formData, breed: e.target.value})} required className="w-full p-2 border rounded">
+                        <option value="">Select breed</option>
+                        {breeds.map((breed: string) => <option key={breed} value={breed}>{breed}</option>)}
+                      </select>
+                    </div>
+                  </>
+                )}
+                {selectedCategory.title === "Growing Birds" && (
+                  <>
+                    <div className="mb-4">
+                      <label className="block mb-2">Age</label>
+                      <select value={formData.age} onChange={(e) => setFormData({...formData, age: e.target.value})} required className="w-full p-2 border rounded">
+                        <option value="">Select age</option>
+                        {selectedCategory.items.map((item: string) => <option key={item} value={item}>{item}</option>)}
+                      </select>
+                    </div>
+                    <div className="mb-4">
+                      <label className="block mb-2">Breed</label>
+                      <select value={formData.breed} onChange={(e) => setFormData({...formData, breed: e.target.value})} required className="w-full p-2 border rounded">
+                        <option value="">Select breed</option>
+                        {breeds.map((breed: string) => <option key={breed} value={breed}>{breed}</option>)}
+                      </select>
+                    </div>
+                  </>
+                )}
+                {selectedCategory.title === "Production Ready" && (
+                  <>
+                    <div className="mb-4">
+                      <label className="block mb-2">Type</label>
+                      <select value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} required className="w-full p-2 border rounded">
+                        <option value="">Select type</option>
+                        <option value="Layer">Layer</option>
+                        <option value="Broiler">Broiler</option>
+                      </select>
+                    </div>
+                    <div className="mb-4">
+                      <label className="block mb-2">Breed</label>
+                      <select value={formData.breed} onChange={(e) => setFormData({...formData, breed: e.target.value})} required className="w-full p-2 border rounded">
+                        <option value="">Select breed</option>
+                        {breeds.map((breed: string) => <option key={breed} value={breed}>{breed}</option>)}
+                      </select>
+                    </div>
+                  </>
+                )}
+                {selectedCategory.title === "Farm Fresh Eggs" && (
+                  <div className="mb-4">
+                    <label className="block mb-2">Type</label>
+                    <select value={formData.item} onChange={(e) => setFormData({...formData, item: e.target.value})} required className="w-full p-2 border rounded">
+                      <option value="">Select type</option>
+                      {selectedCategory.items.map((item: string) => <option key={item} value={item}>{item}</option>)}
+                    </select>
+                  </div>
+                )}
+                <div className="mb-4">
+                  <label className="block mb-2">Quantity</label>
+                  <input type="number" min="1" value={formData.quantity} onChange={(e) => setFormData({...formData, quantity: parseInt(e.target.value) || 1})} required className="w-full p-2 border rounded" />
+                </div>
+                <div className="flex justify-end space-x-2">
+                  <button type="button" onClick={() => setModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                  <button type="submit" className="px-4 py-2 bg-sage-600 text-white rounded">Add to Cart</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  return (
+    <section className="py-16 px-4 bg-sage-50">
+      <div className="max-w-7xl mx-auto">
+        <CategoryPart title="Shop by Category" breeds={Breeds} />
 
         {/* Breed Showcase */}
         <div className="mt-16">

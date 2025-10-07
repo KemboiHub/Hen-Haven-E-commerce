@@ -25,19 +25,17 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
 
   const navigationItems = [
     { id: 'home', label: 'HOME' },
-    { 
-      id: 'shop', 
+    {
+      id: 'shop',
       label: 'SHOP',
       submenu: [
-        'Poultry',
-        '1 Day Old Chicks',
-        '1 Week Chicks',
-        '1 Month Chicks',
-        '2 Month Chicks',
-        '3 Month Chicks',
-        'Layers',
+        'Baby Chicks',
+        'Growing Birds',
+        'Layers', 
         'Broilers',
-        'Fresh Eggs'
+        'Feeds',
+        'Vitamins & Supplements',
+        'Vaccines & Treatments',
       ]
     },
     { id: 'feeds', label: 'FEEDS' },
@@ -90,6 +88,23 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
                       {item.submenu.map((subItem, index) => (
                         <button
                           key={index}
+                          onClick={() => {
+                            if (subItem === 'Feeds') setCurrentSection('feeds');
+                            else if (subItem === 'Vitamins & Supplements') setCurrentSection('feeds');
+                            else if (subItem === 'Vaccines & Treatments') setCurrentSection('vaccine');
+                            else {
+                              setCurrentSection('shop');
+                              setTimeout(() => {
+                                const id = subItem === 'Baby Chicks' ? 'baby-chicks' :
+                                           subItem === 'Growing Birds' ? 'growing-birds' :
+                                           (subItem === 'Layers' || subItem === 'Broilers') ? 'production-ready' : null;
+                                if (id) {
+                                  const element = document.getElementById(id);
+                                  if (element) element.scrollIntoView({ behavior: 'smooth' });
+                                }
+                              }, 100);
+                            }
+                          }}
                           className="block w-full px-4 py-2 text-left text-sage-700 hover:bg-sage-50 hover:text-sage-800 transition-colors"
                         >
                           {subItem}
@@ -106,10 +121,9 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
           <div className="flex items-center space-x-4">
             <Search className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
             <User className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
-            <div className="relative">
+            <div className="relative" onMouseEnter={() => setShowCart(true)} onMouseLeave={() => setShowCart(false)}>
               <ShoppingCart
-                className={`h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors ${animate ? 'animate-bounce' : ''}`}
-                onClick={() => setShowCart(!showCart)}
+                className={`h-6 w-6 text-sage-700 hover:text-sage-900 transition-colors ${animate ? 'animate-bounce' : ''}`}
               />
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-sage-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
