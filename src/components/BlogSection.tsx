@@ -9,7 +9,7 @@ const BlogSection: React.FC = () => {
       author: "Dr. Sarah Johnson",
       date: "March 15, 2024",
       readTime: "8 min read",
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/32314325/pexels-photo-32314325.jpeg",
       category: "Care Guide",
       featured: true
     },
@@ -37,7 +37,7 @@ const BlogSection: React.FC = () => {
       author: "Tom Builder",
       date: "March 8, 2024",
       readTime: "10 min read",
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/32727462/pexels-photo-32727462.jpeg",
       category: "Housing"
     },
     {
@@ -55,7 +55,7 @@ const BlogSection: React.FC = () => {
       author: "Farm Team",
       date: "March 1, 2024",
       readTime: "15 min read",
-      image: "https://images.pexels.com/photos/1300581/pexels-photo-1300581.jpeg",
+      image: "https://images.pexels.com/photos/14376368/pexels-photo-14376368.jpeg",
       category: "Management"
     }
   ];
