@@ -49,7 +49,7 @@ const CategorySection: React.FC = () => {
     const getPrice = (category: string, selections: any) => {
       let base = 0;
       if (category === "Baby Chicks") {
-        const prices: { [key: string]: number } = { "1 day old": 50, "1 week old": 60, "2 weeks old": 70, "3 weeks old": 75 };
+        const prices: { [key: string]: number } = { "1 day old": 110, "1 week old": 150, "2 weeks old": 200, "3 weeks old": 300 };
         base = prices[selections.age] || 50;
       } else if (category === "Growing Birds") {
         const prices: { [key: string]: number } = { "1 month old": 200, "2 months old": 300, "3 months old": 400, "Mixed ages": 350 };
