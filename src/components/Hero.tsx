@@ -1,12 +1,27 @@
 import React from 'react';
 import { ArrowRight, Shield, Truck, Award, Phone } from 'lucide-react';
 import poultryImg from '../assets/images/poultry.jpg';
+import { useCart } from '../context/CartContext';
 
 interface HeroProps {
   setCurrentSection: (section: string) => void;
 }
 
 const Hero: React.FC<HeroProps> = ({ setCurrentSection }) => {
+  const { addToCart } = useCart();
+
+  const defaultProduct = {
+    id: 1,
+    name: "Kenbro Improved Kienyeji",
+    category: "Layers",
+    price: "Ksh 999",
+    originalPrice: "Ksh 1200",
+    rating: 4.9,
+    reviews: 124,
+    image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg",
+    badge: "Best Seller",
+    description: "Hardy, friendly breed perfect for beginners"
+  };
   return (
     <section className="relative overflow-hidden">
       {/* Main Hero */}
@@ -26,8 +41,8 @@ const Hero: React.FC<HeroProps> = ({ setCurrentSection }) => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  onClick={() => setCurrentSection('shop')}
+                <button
+                  onClick={() => addToCart(defaultProduct)}
                   className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center group"
                 >
                   Shop Now

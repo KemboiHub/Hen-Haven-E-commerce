@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 const FeaturedProducts: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showAll, setShowAll] = useState(false);
+  const { addToCart } = useCart();
 
   const products = [
     {
@@ -209,7 +211,10 @@ const FeaturedProducts: React.FC = () => {
 
                 {/* Quick Add Overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300">
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300"
+                  >
                     Quick Add
                   </button>
                 </div>
@@ -254,7 +259,10 @@ const FeaturedProducts: React.FC = () => {
                       <span className="text-sm text-sage-400 line-through">{product.originalPrice}</span>
                     )}
                   </div>
-                  <button className="p-2 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-colors">
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="p-2 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-colors"
+                  >
                     <ShoppingCart className="h-5 w-5" />
                   </button>
                 </div>

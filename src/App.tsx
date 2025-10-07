@@ -7,6 +7,7 @@ import VaccineSection from './components/VaccineSection';
 import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import ContactSection from './components/ContactSection';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home');
@@ -37,13 +38,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-cream-50">
-      <Header currentSection={currentSection} setCurrentSection={setCurrentSection} />
-      <main>
-        {renderSection()}
-      </main>
-      <Footer />
-    </div>
+    <CartProvider>
+      <div className="min-h-screen bg-cream-50">
+        <Header currentSection={currentSection} setCurrentSection={setCurrentSection} />
+        <main>
+          {renderSection()}
+        </main>
+        <Footer />
+      </div>
+    </CartProvider>
   );
 }
 

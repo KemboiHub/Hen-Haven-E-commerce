@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { ShoppingCart, Menu, X, Search, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, Menu, X, Search, User, Minus, Plus, Trash2 } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 interface HeaderProps {
   currentSection: string;
@@ -8,7 +9,19 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartCount] = useState(3);
+  const { cart, removeFromCart, updateQuantity } = useCart();
+  const [showCart, setShowCart] = useState(false);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      setAnimate(true);
+      const timer = setTimeout(() => setAnimate(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [cart.length]);
+
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const navigationItems = [
     { id: 'home', label: 'HOME' },
@@ -94,11 +107,57 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
             <Search className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
             <User className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
             <div className="relative">
-              <ShoppingCart className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
+              <ShoppingCart
+                className={`h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors ${animate ? 'animate-bounce' : ''}`}
+                onClick={() => setShowCart(!showCart)}
+              />
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-sage-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
                 </span>
+              )}
+              {showCart && (
+                <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border z-50">
+                  <div className="p-4">
+                    <h3 className="font-semibold text-sage-800 mb-4">Your Cart</h3>
+                    {cart.length === 0 ? (
+                      <p className="text-sage-600">Your cart is empty</p>
+                    ) : (
+                      <>
+                        {cart.map(item => (
+                          <div key={item.id} className="flex items-center space-x-3 mb-4">
+                            <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                            <div className="flex-1">
+                              <h4 className="text-sm font-medium text-sage-800">{item.name}</h4>
+                              <p className="text-sm text-sage-600">{item.price}</p>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="p-1 hover:bg-sage-100 rounded">
+                                <Minus className="h-4 w-4" />
+                              </button>
+                              <span className="text-sm">{item.quantity}</span>
+                              <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-1 hover:bg-sage-100 rounded">
+                                <Plus className="h-4 w-4" />
+                              </button>
+                              <button onClick={() => removeFromCart(item.id)} className="p-1 hover:bg-red-100 rounded text-red-500">
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="border-t pt-4">
+                          <div className="flex justify-between font-semibold text-sage-800">
+                            <span>Total:</span>
+                            <span>Ksh {cart.reduce((sum, item) => sum + parseInt(item.price.replace('Ksh ', '')) * item.quantity, 0)}</span>
+                          </div>
+                          <button className="w-full mt-4 bg-sage-600 text-white py-2 rounded hover:bg-sage-700">
+                            Checkout
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
             
