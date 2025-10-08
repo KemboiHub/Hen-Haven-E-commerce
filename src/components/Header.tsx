@@ -29,10 +29,7 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
       id: 'shop',
       label: 'SHOP',
       submenu: [
-        'Baby Chicks',
-        'Growing Birds',
-        'Layers', 
-        'Broilers',
+        'poultry',
         'Feeds',
         'Vitamins & Supplements',
         'Vaccines & Treatments',
