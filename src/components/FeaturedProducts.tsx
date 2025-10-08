@@ -215,8 +215,8 @@ const FeaturedProducts: React.FC = () => {
                     onClick={() => addToCart(product)}
                     className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300"
                   >
-                    Quick Add
-                  </button>
+                    SHOP NOW
+                                      </button>
                 </div>
               </div>
 
