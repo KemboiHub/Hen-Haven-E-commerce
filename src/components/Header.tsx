@@ -3,11 +3,12 @@ import { ShoppingCart, Menu, X, Search, User, Minus, Plus, Trash2 } from 'lucide
 import { useCart } from '../context/CartContext';
 
 interface HeaderProps {
-  currentSection: string;
+  activeSection: string;
   setCurrentSection: (section: string) => void;
+  setActiveSection: (section: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) => {
+const Header: React.FC<HeaderProps> = ({ activeSection, setCurrentSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [showCart, setShowCart] = useState(false);
@@ -72,9 +73,12 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
             {navigationItems.map((item) => (
               <div key={item.id} className="relative group">
                 <button
-                  onClick={() => setCurrentSection(item.id)}
+                  onClick={() => {
+                    setCurrentSection(item.id);
+                    setActiveSection(item.id);
+                  }}
                   className={`font-medium transition-colors hover:text-sage-600 ${
-                    currentSection === item.id ? 'text-sage-600' : 'text-sage-800'
+                    activeSection === item.id ? 'text-sage-600' : 'text-sage-800'
                   }`}
                 >
                   {item.label}
@@ -86,11 +90,18 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
                         <button
                           key={index}
                           onClick={() => {
-                            if (subItem === 'Feeds') setCurrentSection('feeds');
-                            else if (subItem === 'Vitamins & Supplements') setCurrentSection('feeds');
-                            else if (subItem === 'Vaccines & Treatments') setCurrentSection('vaccine');
-                            else {
+                            if (subItem === 'Feeds') {
+                              setCurrentSection('feeds');
+                              setActiveSection('feeds');
+                            } else if (subItem === 'Vitamins & Supplements') {
+                              setCurrentSection('feeds');
+                              setActiveSection('feeds');
+                            } else if (subItem === 'Vaccines & Treatments') {
+                              setCurrentSection('vaccine');
+                              setActiveSection('vaccine');
+                            } else {
                               setCurrentSection('shop');
+                              setActiveSection('shop');
                               setTimeout(() => {
                                 const id = subItem === 'Baby Chicks' ? 'baby-chicks' :
                                            subItem === 'Growing Birds' ? 'growing-birds' :
@@ -191,10 +202,11 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
                   key={item.id}
                   onClick={() => {
                     setCurrentSection(item.id);
+                    setActiveSection(item.id);
                     setIsMenuOpen(false);
                   }}
                   className={`text-left font-medium transition-colors hover:text-sage-600 ${
-                    currentSection === item.id ? 'text-sage-600' : 'text-sage-800'
+                    activeSection === item.id ? 'text-sage-600' : 'text-sage-800'
                   }`}
                 >
                   {item.label}

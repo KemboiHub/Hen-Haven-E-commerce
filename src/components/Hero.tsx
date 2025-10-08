@@ -23,7 +23,7 @@ const Hero: React.FC<HeroProps> = ({ setCurrentSection }) => {
     description: "Hardy, friendly breed perfect for beginners"
   };
   return (
-    <section className="relative overflow-hidden">
+    <section id="home" className="relative overflow-hidden">
       {/* Main Hero */}
       <div className="bg-gradient-to-r from-sage-50 to-sage-100 py-20 px-4">
         <div className="max-w-7xl mx-auto">

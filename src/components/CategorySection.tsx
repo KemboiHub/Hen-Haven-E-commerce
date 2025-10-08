@@ -230,7 +230,7 @@ const CategorySection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 px-4 bg-sage-50">
+    <section id="shop" className="py-16 px-4 bg-sage-50">
       <div className="max-w-7xl mx-auto">
         <CategoryPart title="Shop by Category" breeds={Breeds} />
 

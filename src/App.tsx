@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeaturedProducts from './components/FeaturedProducts';
@@ -11,6 +11,30 @@ import { CartProvider } from './context/CartContext';
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'featured-products', 'shop', 'vaccine', 'blog', 'contact', 'feeds'];
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      let current = 'home';
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element && element.offsetTop <= scrollPosition) {
+          if (sectionId === 'home' || sectionId === 'featured-products') {
+            current = 'home';
+          } else {
+            current = sectionId;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const renderSection = () => {
     switch (currentSection) {
@@ -40,7 +64,7 @@ function App() {
   return (
     <CartProvider>
       <div className="min-h-screen bg-cream-50">
-        <Header currentSection={currentSection} setCurrentSection={setCurrentSection} />
+        <Header activeSection={activeSection} setCurrentSection={setCurrentSection} setActiveSection={setActiveSection} />
         <main>
           {renderSection()}
         </main>
@@ -84,7 +108,7 @@ const FeedsSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 max-w-7xl mx-auto">
+    <section id="feeds" className="py-16 px-4 max-w-7xl mx-auto">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-sage-800 mb-4">Premium Poultry Feeds</h1>
         <p className="text-xl text-sage-600 max-w-3xl mx-auto">

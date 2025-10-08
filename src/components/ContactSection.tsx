@@ -68,7 +68,7 @@ const ContactSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-white">
+    <section id="contact" className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">

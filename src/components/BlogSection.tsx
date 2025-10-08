@@ -70,7 +70,7 @@ const BlogSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-sage-50">
+    <section id="blog" className="py-16 px-4 bg-sage-50">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">

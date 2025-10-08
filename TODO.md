@@ -2,3 +2,7 @@
 - [x] Update FeaturedProducts.tsx to accept setCurrentSection prop and change the "SHOP NOW" hover button to navigate to shop section instead of adding to cart
 - [x] Change the button text from "SHOP NOW" to "GO TO SHOP"
 - [ ] Test the changes by running the app and verifying the button behavior
+- [x] Implement scrollspy for header tab highlighting on scroll through Home page sections
+  - [x] Add IDs to section components (Hero, FeaturedProducts, CategorySection, VaccineSection, BlogSection, ContactSection, FeedsSection)
+  - [x] Add scroll event listener in App.tsx to update currentSection based on visible section
+  - [x] Map section IDs to header tab IDs (home/featured-products -> home, shop -> shop, etc.)

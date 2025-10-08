@@ -161,7 +161,7 @@ const FeaturedProducts: React.FC<{ setCurrentSection: (section: string) => void 
   const displayedProducts = showAll ? products : products.slice(0, 4);
 
   return (
-    <section className="py-16 px-4 bg-white">
+    <section id="featured-products" className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -212,11 +212,11 @@ const FeaturedProducts: React.FC<{ setCurrentSection: (section: string) => void 
                 {/* Quick Add Overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <button
-                    onClick={() => setCurrentSection('shop')}
+                    onClick={() => { const element = document.getElementById('shop'); if (element) element.scrollIntoView({ behavior: 'smooth' }); }}
                     className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300"
                   >
                     GO TO SHOP
-                                      </button>
+                  </button>
                 </div>
               </div>
 
