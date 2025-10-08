@@ -28,7 +28,7 @@ function App() {
         return (
           <>
             <Hero setCurrentSection={setCurrentSection} />
-            <FeaturedProducts />
+            <FeaturedProducts setCurrentSection={setCurrentSection} />
             <CategorySection />
             <VaccineSection setCurrentSection={setCurrentSection} />
             <BlogSection />

@@ -1,7 +1,4 @@
-# TODO: Add Breed Selection to Baby Chicks and Growing Birds
-
-- [x] Update Baby Chicks subtitle to "1 Month Old"
-- [x] Update Baby Chicks items to ["1 month old", "2 months old", "3 months old"]
-- [x] Add breed selection to Baby Chicks modal
-- [x] Add breed selection to Growing Birds modal
-- [x] Test the modal functionality
+- [x] Modify App.tsx to pass setCurrentSection prop to FeaturedProducts component
+- [x] Update FeaturedProducts.tsx to accept setCurrentSection prop and change the "SHOP NOW" hover button to navigate to shop section instead of adding to cart
+- [x] Change the button text from "SHOP NOW" to "GO TO SHOP"
+- [ ] Test the changes by running the app and verifying the button behavior

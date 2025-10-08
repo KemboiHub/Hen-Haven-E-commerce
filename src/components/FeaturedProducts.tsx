@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-const FeaturedProducts: React.FC = () => {
+const FeaturedProducts: React.FC<{ setCurrentSection: (section: string) => void }> = ({ setCurrentSection }) => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showAll, setShowAll] = useState(false);
   const { addToCart } = useCart();
@@ -212,10 +212,10 @@ const FeaturedProducts: React.FC = () => {
                 {/* Quick Add Overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => setCurrentSection('shop')}
                     className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300"
                   >
-                    SHOP NOW
+                    GO TO SHOP
                                       </button>
                 </div>
               </div>
