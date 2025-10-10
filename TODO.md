@@ -1,3 +1,4 @@
+
 # Task: Implement Back Button Navigation
 
 ## Steps to Complete:
@@ -50,8 +51,8 @@
 - [x] Step 3: Update Hero.tsx
 - [x] Step 4: Update FeaturedProducts.tsx
 - [x] Step 5: Update VaccineSection.tsx
-- [ ] Step 6: Update BlogSection.tsx
-- [ ] Step 7: Update ContactSection.tsx
-- [ ] Step 8: Update CategorySection.tsx
-- [ ] Step 9: Update FeedsSection in App.tsx
-- [ ] Step 10: Test
+- [x] Step 6: Update BlogSection.tsx
+- [x] Step 7: Update ContactSection.tsx
+- [x] Step 8: Update CategorySection.tsx
+- [x] Step 9: Update FeedsSection in App.tsx
+- [x] Step 10: Test
