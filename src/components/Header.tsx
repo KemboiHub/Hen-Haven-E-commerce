@@ -13,6 +13,27 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [showCart, setShowCart] = useState(false);
   const [animate, setAnimate] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const products = [
+    { id: 1, name: "Kenbro Improved Kienyeji", category: "Layers", price: "Ksh 999", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
+    { id: 2, name: "Farm Fresh Eggs", category: "Dozen", price: "Ksh 750", image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg" },
+    { id: 3, name: "Premium Layer Feed", category: "20lb Bag", price: "Ksh 1500", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
+    { id: 4, name: "Kari Improved Kienyeji", category: "Broilers", price: "Ksh 1200", image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg" },
+    { id: 5, name: "Baby Chicks", category: "Chicks", price: "Ksh 50", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
+    { id: 6, name: "Growing Birds", category: "Poultry", price: "Ksh 200", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
+    { id: 7, name: "Production Ready", category: "Layers/Broilers", price: "Ksh 800", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
+    { id: 8, name: "Starter Feed", category: "Feed", price: "Ksh 45", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
+    { id: 9, name: "Grower Feed", category: "Feed", price: "Ksh 42", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
+    { id: 10, name: "Layer Feed", category: "Feed", price: "Ksh 48", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
+    { id: 11, name: "Broiler Feed", category: "Feed", price: "Ksh 50", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
+  ];
+
+  const searchResults = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     if (cart.length > 0) {
@@ -120,7 +141,86 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
 
           {/* Right Side Icons */}
           <div className="flex items-center space-x-4">
-            <Search className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
+            {/* Search Icon and Input */}
+            <div className="relative">
+              {!showSearch ? (
+                <button
+                  onClick={() => setShowSearch(true)}
+                  className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors"
+                >
+                  <Search className="h-6 w-6" />
+                </button>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search products..."
+                    className="px-3 py-2 border border-sage-200 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-transparent outline-none w-64"
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => {
+                      setShowSearch(false);
+                      setSearchQuery('');
+                    }}
+                    className="text-sage-500 hover:text-sage-700"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+              )}
+              {/* Search Results Dropdown */}
+              {searchQuery && showSearch && (
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border z-50 max-h-96 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    searchResults.map((product) => (
+                      <div
+                        key={product.id}
+                        className="p-4 border-b border-sage-100 hover:bg-sage-50 cursor-pointer flex items-center space-x-3"
+                        onClick={() => {
+                          navigateToSection('shop');
+                          setShowSearch(false);
+                          setSearchQuery('');
+                          // Scroll to relevant category if needed
+                          setTimeout(() => {
+                            const categoryId = product.category.toLowerCase().replace(/\s+/g, '-');
+                            const element = document.getElementById(categoryId);
+                            if (element) element.scrollIntoView({ behavior: 'smooth' });
+                          }, 300);
+                        }}
+                      >
+                        <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-medium text-sage-800 truncate">{product.name}</h4>
+                          <p className="text-xs text-sage-600 truncate">{product.category}</p>
+                          <p className="text-sm font-semibold text-sage-800">{product.price}</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-sage-500">
+                      No products found for "{searchQuery}"
+                    </div>
+                  )}
+                  {searchResults.length > 0 && (
+                    <div className="p-4 border-t border-sage-100">
+                      <button
+                        onClick={() => {
+                          navigateToSection('shop');
+                          setShowSearch(false);
+                          setSearchQuery('');
+                        }}
+                        className="w-full text-sage-600 hover:text-sage-800 text-sm font-medium"
+                      >
+                        View All Products →
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
             <User className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
             <div className="relative" onMouseEnter={() => setShowCart(true)} onMouseLeave={() => setShowCart(false)}>
               <ShoppingCart
