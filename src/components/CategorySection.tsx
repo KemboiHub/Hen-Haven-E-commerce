@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
-const CategorySection: React.FC = () => {
+interface CategorySectionProps {
+  navigateToSection?: (section: string) => void;
+  goBack?: () => void;
+}
+
+const CategorySection: React.FC<CategorySectionProps> = ({ navigateToSection, goBack }) => {
   const Breeds = ['Kenbro Improved Kienyeji', 'Kari Improved Kienyeji','Kuroiler', 'Sasso breeds', 'Rainbow Rooster', 'Sussex'];
 
   const categories = [

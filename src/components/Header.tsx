@@ -4,11 +4,11 @@ import { useCart } from '../context/CartContext';
 
 interface HeaderProps {
   activeSection: string;
-  setCurrentSection: (section: string) => void;
+  navigateToSection: (section: string) => void;
   setActiveSection: (section: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ activeSection, setCurrentSection, setActiveSection }) => {
+const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart, removeFromCart, updateQuantity } = useCart();
   const [showCart, setShowCart] = useState(false);
@@ -73,10 +73,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setCurrentSection, setAc
             {navigationItems.map((item) => (
               <div key={item.id} className="relative group">
                 <button
-                  onClick={() => {
-                    setCurrentSection(item.id);
-                    setActiveSection(item.id);
-                  }}
+                  onClick={() => navigateToSection(item.id)}
                   className={`font-medium transition-colors hover:text-sage-600 ${
                     activeSection === item.id ? 'text-sage-600' : 'text-sage-800'
                   }`}
@@ -91,17 +88,13 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setCurrentSection, setAc
                           key={index}
                           onClick={() => {
                             if (subItem === 'Feeds') {
-                              setCurrentSection('feeds');
-                              setActiveSection('feeds');
+                              navigateToSection('feeds');
                             } else if (subItem === 'Vitamins & Supplements') {
-                              setCurrentSection('feeds');
-                              setActiveSection('feeds');
+                              navigateToSection('feeds');
                             } else if (subItem === 'Vaccines & Treatments') {
-                              setCurrentSection('vaccine');
-                              setActiveSection('vaccine');
+                              navigateToSection('vaccine');
                             } else {
-                              setCurrentSection('shop');
-                              setActiveSection('shop');
+                              navigateToSection('shop');
                               setTimeout(() => {
                                 const id = subItem === 'Baby Chicks' ? 'baby-chicks' :
                                            subItem === 'Growing Birds' ? 'growing-birds' :
@@ -201,8 +194,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setCurrentSection, setAc
                 <button
                   key={item.id}
                   onClick={() => {
-                    setCurrentSection(item.id);
-                    setActiveSection(item.id);
+                    navigateToSection(item.id);
                     setIsMenuOpen(false);
                   }}
                   className={`text-left font-medium transition-colors hover:text-sage-600 ${

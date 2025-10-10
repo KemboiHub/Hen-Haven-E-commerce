@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle, ChevronLeft } from 'lucide-react';
 
-const ContactSection: React.FC = () => {
+interface ContactSectionProps {
+  goBack?: () => void;
+}
+
+const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -70,6 +74,12 @@ const ContactSection: React.FC = () => {
   return (
     <section id="contact" className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
+        {/* Back Button */}
+        {goBack && (
+          <button onClick={goBack} className="flex items-center text-sage-600 hover:text-sage-800 mb-4">
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+        )}
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-sage-800 mb-4">Get in Touch</h2>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-const FeaturedProducts: React.FC<{ setCurrentSection: (section: string) => void }> = ({ setCurrentSection }) => {
+const FeaturedProducts: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showAll, setShowAll] = useState(false);
   const { addToCart } = useCart();

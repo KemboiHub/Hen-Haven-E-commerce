@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Shield, Thermometer, Syringe, Heart, AlertCircle, CheckCircle } from 'lucide-react';
+import { Shield, Thermometer, Syringe, Heart, AlertCircle, CheckCircle, ChevronLeft } from 'lucide-react';
 
 interface VaccineSectionProps {
-  setCurrentSection: React.Dispatch<React.SetStateAction<string>>;
+  navigateToSection: (section: string) => void;
+  goBack?: () => void;
 }
 
-const VaccineSection: React.FC<VaccineSectionProps> = ({ setCurrentSection }) => {
+const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBack }) => {
   const [activeTab, setActiveTab] = useState('vaccines');
 
   const vaccines = [
@@ -85,6 +86,12 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ setCurrentSection }) =>
   return (
     <section id="vaccine" className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
+        {/* Back Button */}
+        {goBack && (
+          <button onClick={goBack} className="flex items-center text-sage-600 hover:text-sage-800 mb-4">
+            <ChevronLeft className="h-5 w-5 mr-2" /> Back
+          </button>
+        )}
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-sage-800 mb-4">Healthcare & Treatment</h2>
@@ -235,16 +242,16 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ setCurrentSection }) =>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => {
-                setCurrentSection('contact');
+                navigateToSection('contact');
                 setTimeout(() => document.getElementById('send-message-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}
               className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors"
             >
               Schedule Consultation
             </button>
-            <button 
+            <button
              onClick={() => {
-                setCurrentSection('contact');
+                navigateToSection('contact');
                 setTimeout(() => document.getElementById('emergency-support')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-sage-800 transition-colors">
               Emergency Hotline

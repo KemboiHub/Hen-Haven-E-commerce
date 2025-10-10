@@ -1,7 +1,11 @@
 import React from 'react';
-import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
+import { Calendar, User, ArrowRight, Clock, ChevronLeft } from 'lucide-react';
 
-const BlogSection: React.FC = () => {
+interface BlogSectionProps {
+  goBack?: () => void;
+}
+
+const BlogSection: React.FC<BlogSectionProps> = ({ goBack }) => {
   const blogPosts = [
     {
       title: "Complete Guide to Raising Baby Chicks",
@@ -72,6 +76,12 @@ const BlogSection: React.FC = () => {
   return (
     <section id="blog" className="py-16 px-4 bg-sage-50">
       <div className="max-w-7xl mx-auto">
+        {/* Back Button */}
+        {goBack && (
+          <button onClick={goBack} className="flex items-center text-sage-600 hover:text-sage-800 mb-4">
+            <ChevronLeft className="h-5 w-5 mr-2" /> Back
+          </button>
+        )}
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-sage-800 mb-4">Expert Insights & Guides</h2>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronLeft } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeaturedProducts from './components/FeaturedProducts';
@@ -12,6 +13,26 @@ import { CartProvider } from './context/CartContext';
 function App() {
   const [currentSection, setCurrentSection] = useState('home');
   const [activeSection, setActiveSection] = useState('home');
+  const [sectionHistory, setSectionHistory] = useState<string[]>(['home']);
+
+  const navigateToSection = (section: string) => {
+    if (section !== currentSection) {
+      setSectionHistory(prev => [...prev, section]);
+      setCurrentSection(section);
+      setActiveSection(section);
+    }
+  };
+
+  const goBack = () => {
+    if (sectionHistory.length > 1) {
+      const newHistory = [...sectionHistory];
+      newHistory.pop();
+      const previous = newHistory[newHistory.length - 1];
+      setSectionHistory(newHistory);
+      setCurrentSection(previous);
+      setActiveSection(previous);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,22 +60,22 @@ function App() {
   const renderSection = () => {
     switch (currentSection) {
       case 'shop':
-        return <CategorySection />;
+        return <CategorySection navigateToSection={navigateToSection} goBack={goBack} />;
       case 'feeds':
-        return <FeedsSection />;
+        return <FeedsSection goBack={goBack} />;
       case 'vaccine':
-        return <VaccineSection setCurrentSection={setCurrentSection} />;
+        return <VaccineSection navigateToSection={navigateToSection} goBack={goBack} />;
       case 'contact':
-        return <ContactSection />;
+        return <ContactSection goBack={goBack} />;
       case 'blog':
-        return <BlogSection />;
+        return <BlogSection goBack={goBack} />;
       default:
         return (
           <>
-            <Hero setCurrentSection={setCurrentSection} />
-            <FeaturedProducts setCurrentSection={setCurrentSection} />
+            <Hero navigateToSection={navigateToSection} />
+            <FeaturedProducts />
             <CategorySection />
-            <VaccineSection setCurrentSection={setCurrentSection} />
+            <VaccineSection navigateToSection={navigateToSection} />
             <BlogSection />
           </>
         );
@@ -64,7 +85,7 @@ function App() {
   return (
     <CartProvider>
       <div className="min-h-screen bg-cream-50">
-        <Header activeSection={activeSection} setCurrentSection={setCurrentSection} setActiveSection={setActiveSection} />
+        <Header activeSection={activeSection} navigateToSection={navigateToSection} setActiveSection={setActiveSection} />
         <main>
           {renderSection()}
         </main>
