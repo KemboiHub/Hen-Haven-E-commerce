@@ -7,7 +7,7 @@ interface CategorySectionProps {
   goBack?: () => void;
 }
 
-const CategorySection: React.FC<CategorySectionProps> = ({ navigateToSection, goBack }) => {
+const CategorySection: React.FC<CategorySectionProps> = () => {
   const Breeds = ['Kenbro Improved Kienyeji', 'Kari Improved Kienyeji','Kuroiler', 'Sasso breeds', 'Rainbow Rooster', 'Sussex'];
 
   const categories = [
