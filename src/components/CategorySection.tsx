@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, ChevronLeft } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -50,6 +50,14 @@ const CategorySection: React.FC<CategorySectionProps> = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<any>(null);
     const [formData, setFormData] = useState({ age: '', type: '', breed: '', item: '', quantity: 1 });
+    const [currentPrice, setCurrentPrice] = useState(0);
+
+    useEffect(() => {
+      if (selectedCategory) {
+        const price = getPrice(selectedCategory.title, formData);
+        setCurrentPrice(price);
+      }
+    }, [formData, selectedCategory]);
 
     const getPrice = (category: string, selections: any) => {
       let base = 0;
@@ -222,6 +230,11 @@ const CategorySection: React.FC<CategorySectionProps> = () => {
                   <label className="block mb-2">Quantity</label>
                   <input type="number" min="1" value={formData.quantity} onChange={(e) => setFormData({...formData, quantity: parseInt(e.target.value) || 1})} required className="w-full p-2 border rounded" />
                 </div>
+                {currentPrice > 0 && (
+                  <div className="mb-4">
+                    <p className="text-lg font-semibold text-sage-800">Total Price: KSh {currentPrice}</p>
+                  </div>
+                )}
                 <div className="flex justify-end space-x-2">
                   <button type="button" onClick={() => setModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded">Cancel</button>
                   <button type="submit" className="px-4 py-2 bg-sage-600 text-white rounded">Add to Cart</button>
