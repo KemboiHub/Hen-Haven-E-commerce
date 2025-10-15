@@ -31,18 +31,7 @@ const FeaturedProducts: React.FC = () => {
       badge: "Farm Fresh",
       description: "Free-range, organic eggs from happy hens"
     },
-    {
-      id: 3,
-      name: "Premium Layer Feed",
-      category: "20lb Bag",
-      price: "Ksh 1500",
-      originalPrice: "Ksh 1800",
-      rating: 4.7,
-      reviews: 156,
-      image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
-      badge: "Premium",
-      description: "Complete nutrition for optimal egg production"
-    },
+    
     {
       id: 4,
       name: "Kari Improved Kienyeji",
