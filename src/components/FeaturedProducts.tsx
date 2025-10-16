@@ -104,18 +104,19 @@ const FeaturedProducts: React.FC = () => {
     },
         {
       id: 5,
-      name: "Kari Improved Kienyeji",
+      name: "kuroiler breeds",
       category: "Broilers",
-      price: "Ksh 1200",
+      price: "Ksh 999",
+      originalPrice: "Ksh 1200",
       rating: 4.9,
       reviews: 67,
-      image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSveKtAeirVeyL-56mYTz4Lw2qUne7wuolqjQ&s",
       badge: "Limited",
-      description: "Adorable miniature chickens, perfect for small spaces"
+      description: "Adorable miniature poultry, perfect for small spaces"
     },
         {
       id: 1,
-      name: "Kenbro Improved Kienyeji",
+      name: "Sasso breeds",
       category: "Layers",
       price: "Ksh 999",
       originalPrice: "Ksh 1200",
@@ -127,7 +128,7 @@ const FeaturedProducts: React.FC = () => {
     },
     {
       id: 2,
-      name: "Farm Fresh Eggs",
+      name: "Rainbow Rooster",
       category: "Dozen",
       price: "Ksh 750",
       originalPrice: "Ksh 900",
@@ -139,7 +140,7 @@ const FeaturedProducts: React.FC = () => {
     },
     {
       id: 3,
-      name: "Premium Layer Feed",
+      name: "Sussex Breed",
       category: "20lb Bag",
       price: "Ksh 1500",
       originalPrice: "Ksh 1800",
