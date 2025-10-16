@@ -55,27 +55,28 @@ const FeaturedProducts: React.FC = () => {
       description: "Adorable miniature chickens, perfect for small spaces"
     },
     {
-      id: 5,
-      name: "Kari Improved Kienyeji",
-      category: "Broilers",
-      price: "Ksh 1200",
-      rating: 4.9,
-      reviews: 67,
-      image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg",
-      badge: "Limited",
-      description: "Adorable miniature chickens, perfect for small spaces"
-    },
-        {
       id: 1,
       name: "Kenbro Improved Kienyeji",
-      category: "Layers",
+      category: "Broilers",
       price: "Ksh 999",
       originalPrice: "Ksh 1200",
       rating: 4.9,
       reviews: 124,
-      image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrf_ggNq7Kj0H31d71EWbxXebAb-S0aBJ8SQ&s",
       badge: "Best Seller",
-      description: "Hardy, friendly breed perfect for beginners"
+      description: "Adorable miniature chickens, perfect for small spaces"
+    },
+    {
+      id: 1,
+      name: "Kari Improved Kienyeji",
+      category: "Layers",
+      price: "Ksh 899",
+      originalPrice: "Ksh 1100",
+      rating: 4.9,
+      reviews: 124,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKzUg_oGe8Hdj9yJK_h5ahrsXHDq9G-K3wnw&s",
+      badge: "Best Seller",
+      description: "Adorable miniature chickens, perfect for small spaces"
     },
     {
       id: 2,
