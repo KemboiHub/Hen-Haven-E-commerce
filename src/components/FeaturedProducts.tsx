@@ -80,15 +80,15 @@ const FeaturedProducts: React.FC = () => {
     },
     {
       id: 2,
-      name: "Farm Fresh Eggs",
-      category: "Dozen",
-      price: "Ksh 750",
-      originalPrice: "Ksh 900",
+      name: "Improved Kienyeji",
+      category: "Growing",
+      price: "Ksh 400",
+      originalPrice: "Ksh 500",
       rating: 4.8,
       reviews: 89,
-      image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg",
-      badge: "Farm Fresh",
-      description: "Free-range, organic eggs from happy hens"
+      image: "https://static.wixstatic.com/media/efd390_00b8f5c223a04a03b1523253193bcedf~mv2.jpeg/v1/fill/w_476,h_634,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/efd390_00b8f5c223a04a03b1523253193bcedf~mv2.jpeg",
+      badge: "Premium Poultry",
+      description: "Free-range, perfect for beginners"
     },
     {
       id: 3,
