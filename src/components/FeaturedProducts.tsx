@@ -33,15 +33,15 @@ const FeaturedProducts: React.FC = () => {
     },
     {
       id: 3,
-      name: "Premium Layer Feed",
-      category: "20lb Bag",
-      price: "Ksh 1500",
-      originalPrice: "Ksh 1800",
+      name: "Premium chicks",
+      category: "Baby Chicks",
+      price: "Ksh 110",
+      originalPrice: "Ksh 120",
       rating: 4.7,
       reviews: 156,
-      image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
+      image: "https://images.pexels.com/photos/32314325/pexels-photo-32314325.jpeg",
       badge: "Premium",
-      description: "Complete nutrition for optimal egg production"
+      description: "Specially vaccinated baby chicks"
     },
     {
       id: 4,
