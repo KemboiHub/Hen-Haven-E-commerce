@@ -29,13 +29,13 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Visit Our Farm",
-      details: ["123 Hen Haven Lane", "Farmville, State 12345"],
+      details: ["Molo along Nakuru-Eldoret highway"],
       action: "Get Directions"
     },
     {
       icon: <Phone className="h-6 w-6" />,
       title: "Call Us",
-      details: ["(555) 123-HENS", "(555) 123-4367"],
+      details: ["Roz Poultry", "(+254) 792151754"],
       action: "Call Now"
     },
     {
