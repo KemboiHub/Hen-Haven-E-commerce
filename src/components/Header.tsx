@@ -93,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
               <div key={item.id} className="relative group">
                 <button
                   onClick={() => navigateToSection(item.id)}
-                  className={`font-medium transition-colors hover:text-sage-600 ${
+                  className={`font-medium transition-colors hover:text-sage-400 ${
                     activeSection === item.id ? 'text-sage-600' : 'text-sage-800'
                   }`}
                 >
@@ -125,7 +125,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                               }, 100);
                             }
                           }}
-                          className="block w-full px-4 py-2 text-left text-sage-700 hover:bg-sage-50 hover:text-sage-800 transition-colors"
+                          className="block w-full px-4 py-2 text-left text-sage-700 hover:bg-sage-50 hover:text-sage-600 transition-colors"
                         >
                           {subItem}
                         </button>
@@ -210,7 +210,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                           setShowSearch(false);
                           setSearchQuery('');
                         }}
-                        className="w-full text-sage-600 hover:text-sage-800 text-sm font-medium"
+                        className="w-full text-sage-600 hover:text-sage-400 text-sm font-medium"
                       >
                         View All Products →
                       </button>
@@ -295,7 +295,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                     navigateToSection(item.id);
                     setIsMenuOpen(false);
                   }}
-                  className={`text-left font-medium transition-colors hover:text-sage-600 ${
+                  className={`text-left font-medium transition-colors hover:text-sage-400 ${
                     activeSection === item.id ? 'text-sage-600' : 'text-sage-800'
                   }`}
                 >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 const FeaturedProducts: React.FC = () => {
@@ -198,9 +198,9 @@ const FeaturedProducts: React.FC = () => {
                 </div>
 
                 {/* Favorite Button */}
-                <button 
+                <button
                   onClick={() => toggleFavorite(product.id)}
-                  className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
+                  className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-sage-100 transition-colors"
                 >
                   <Heart 
                     className={`h-5 w-5 transition-colors ${
@@ -215,7 +215,7 @@ const FeaturedProducts: React.FC = () => {
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <button
                     onClick={() => { const element = document.getElementById('shop'); if (element) element.scrollIntoView({ behavior: 'smooth' }); }}
-                    className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300"
+                    className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-100 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300"
                   >
                     GO TO SHOP
                   </button>
@@ -228,7 +228,7 @@ const FeaturedProducts: React.FC = () => {
                   <span className="text-sm text-sage-500 uppercase tracking-wide">{product.category}</span>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-sage-800 mb-2 group-hover:text-sage-600 transition-colors">
+                <h3 className="text-xl font-semibold text-sage-800 mb-2 group-hover:text-sage-300 transition-colors">
                   {product.name}
                 </h3>
                 
@@ -263,7 +263,7 @@ const FeaturedProducts: React.FC = () => {
                   </div>
                   <button
                     onClick={() => addToCart(product)}
-                    className="p-2 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-colors"
+                    className="p-2 bg-sage-600 text-white rounded-lg hover:bg-sage-300 transition-colors"
                   >
                     <ShoppingCart className="h-5 w-5" />
                   </button>
@@ -275,9 +275,9 @@ const FeaturedProducts: React.FC = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button 
+          <button
             onClick={() => setShowAll(!showAll)}
-            className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105"
+            className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-400 transition-all duration-300 transform hover:scale-105"
           >
             {showAll ? 'Show Less' : 'View All Products'}
           </button>

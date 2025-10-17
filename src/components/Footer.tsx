@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-sage-200 hover:text-white transition-colors">
+                  <a href={link.href} className="text-sage-200 hover:text-sage-100 transition-colors">
                     {link.name}
                   </a>
                 </li>
@@ -84,7 +84,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {products.map((product, index) => (
                 <li key={index}>
-                  <a href={product.href} className="text-sage-200 hover:text-white transition-colors">
+                  <a href={product.href} className="text-sage-200 hover:text-sage-100 transition-colors">
                     {product.name}
                   </a>
                 </li>
@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {support.map((item, index) => (
                 <li key={index}>
-                  <a href={item.href} className="text-sage-200 hover:text-white transition-colors">
+                  <a href={item.href} className="text-sage-200 hover:text-sage-100 transition-colors">
                     {item.name}
                   </a>
                 </li>
@@ -131,25 +131,25 @@ const Footer: React.FC = () => {
         <div className="border-t border-sage-700 pt-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div className="flex justify-center lg:justify-start space-x-6 mb-6 lg:mb-0">
-              <a href="#" className="text-sage-200 hover:text-white transition-colors">
+              <a href="#" className="text-sage-200 hover:text-sage-100 transition-colors">
                 <Facebook className="h-6 w-6" />
               </a>
-              <a href="#" className="text-sage-200 hover:text-white transition-colors">
+              <a href="#" className="text-sage-200 hover:text-sage-100 transition-colors">
                 <Instagram className="h-6 w-6" />
               </a>
-              <a href="#" className="text-sage-200 hover:text-white transition-colors">
+              <a href="#" className="text-sage-200 hover:text-sage-100 transition-colors">
                 <Twitter className="h-6 w-6" />
               </a>
-              <a href="#" className="text-sage-200 hover:text-white transition-colors">
+              <a href="#" className="text-sage-200 hover:text-sage-100 transition-colors">
                 <Youtube className="h-6 w-6" />
               </a>
             </div>
             
             <div className="text-center lg:text-right text-sage-200 space-y-2 lg:space-y-0 lg:space-x-6 lg:flex lg:items-center">
               <div className="flex flex-col lg:flex-row lg:space-x-6">
-                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+                <a href="#" className="hover:text-sage-100 transition-colors">Privacy Policy</a>
+                <a href="#" className="hover:text-sage-100 transition-colors">Terms of Service</a>
+                <a href="#" className="hover:text-sage-100 transition-colors">Cookie Policy</a>
               </div>
               <div className="text-sm">
                 © 2026 Hen Haven. All rights reserved.

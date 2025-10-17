@@ -88,7 +88,7 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBa
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
         {goBack && (
-          <button onClick={goBack} className="flex items-center text-sage-600 hover:text-sage-800 mb-4">
+          <button onClick={goBack} className="flex items-center text-sage-600 hover:text-sage-400 mb-4">
             <ChevronLeft className="h-5 w-5 mr-2" /> Back
           </button>
         )}
@@ -108,7 +108,7 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBa
               className={`px-6 py-3 rounded-md font-semibold transition-all ${
                 activeTab === 'vaccines'
                   ? 'bg-white text-sage-800 shadow-md'
-                  : 'text-sage-600 hover:text-sage-800'
+                  : 'text-sage-600 hover:text-sage-400'
               }`}
             >
               <Shield className="inline h-5 w-5 mr-2" />
@@ -119,7 +119,7 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBa
               className={`px-6 py-3 rounded-md font-semibold transition-all ${
                 activeTab === 'treatments'
                   ? 'bg-white text-sage-800 shadow-md'
-                  : 'text-sage-600 hover:text-sage-800'
+                  : 'text-sage-600 hover:text-sage-400'
               }`}
             >
               <Heart className="inline h-5 w-5 mr-2" />
@@ -245,7 +245,7 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBa
                 navigateToSection('contact');
                 setTimeout(() => document.getElementById('send-message-section')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}
-              className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-50 transition-colors"
+              className="bg-white text-sage-800 px-6 py-3 rounded-lg font-semibold hover:bg-sage-100 transition-colors"
             >
               Schedule Consultation
             </button>
@@ -253,7 +253,7 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBa
              onClick={() => {
                 navigateToSection('contact');
                 setTimeout(() => document.getElementById('emergency-support')?.scrollIntoView({ behavior: 'smooth' }), 100);
-              }}className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-sage-800 transition-colors">
+              }}className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-sage-600 transition-colors">
               Emergency Hotline
             </button>
           </div>
