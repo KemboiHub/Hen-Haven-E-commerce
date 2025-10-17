@@ -57,8 +57,6 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
         'Vaccines & Treatments',
       ]
     },
-    { id: 'feeds', label: 'FEEDS' },
-    { id: 'vaccine', label: 'VACCINE & TREATMENT' },
     { id: 'contact', label: 'CONTACT US' },
     { id: 'blog', label: 'BLOG' }
   ];

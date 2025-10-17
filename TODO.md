@@ -1,3 +1,3 @@
-# TODO: Modify Emergency Support Button
+# TODO: Remove FEEDS and VACCINE & TREATMENT from Header Navigation
 
-- [x] Add onClick handler to emergency support button in ContactSection.tsx to initiate phone call to +254792151754
+- [x] Remove 'feeds' and 'vaccine' items from navigationItems array in Header.tsx
