@@ -231,7 +231,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
               <p className="text-red-600 mb-4">
                 For urgent health concerns with your birds, call our 24/7 emergency line.
               </p>
-              <button className="w-full bg-red-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-red-700 transition-colors">
+              <button
+                onClick={() => window.location.href = 'tel:+254792151754'}
+                className="w-full bg-red-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+              >
                 Call Emergency Line
               </button>
             </div>
