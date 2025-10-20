@@ -11,18 +11,7 @@ import ContactSection from './components/ContactSection';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 
-function App() {
-  const [currentSection, setCurrentSection] = useState('home');
-  const [activeSection, setActiveSection] = useState('home');
-  const [sectionHistory, setSectionHistory] = useState<string[]>(['home']);
 
-  const navigateToSection = (section: string) => {
-    if (section !== currentSection) {
-      setSectionHistory(prev => [...prev, section]);
-      setCurrentSection(section);
-      setActiveSection(section);
-    }
-  };
 
   const goBack = () => {
     if (sectionHistory.length > 1) {
