@@ -64,21 +64,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     initializeUsers();
     const users = JSON.parse(localStorage.getItem('henHavenUsers') || '[]');
 
-    // Check if user exists and password matches
-    const foundUser = users.find((u: any) => u.email === email && u.password === password);
+    // Check if user exists
+    const foundUser = users.find((u: any) => u.email === email);
 
-    if (foundUser) {
-      const userData: User = {
-        id: foundUser.id,
-        email: foundUser.email,
-        name: foundUser.name,
-      };
-      setUser(userData);
-      // Store current user session
-      localStorage.setItem('currentUser', JSON.stringify(userData));
-      return true;
+    if (!foundUser) {
+      throw new Error('No account found with this email address. Please check your email or sign up for a new account.');
     }
-    return false;
+
+    // Check if password matches
+    if (foundUser.password !== password) {
+      throw new Error('Incorrect password. Please try again or reset your password.');
+    }
+
+    // Successful login
+    const userData: User = {
+      id: foundUser.id,
+      email: foundUser.email,
+      name: foundUser.name,
+    };
+    setUser(userData);
+    // Store current user session
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+    return true;
   };
 
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
