@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Menu, X, Search, User, Minus, Plus, Trash2 } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search, User, Minus, Plus, Trash2, LogOut } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import LoginModal from './LoginModal';
 
 interface HeaderProps {
   activeSection: string;
@@ -15,6 +17,8 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
   const [animate, setAnimate] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const { user, isLoggedIn, logout } = useAuth();
 
   const products = [
     { id: 1, name: "Kenbro Improved Kienyeji", category: "Layers", price: "Ksh 999", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
@@ -219,7 +223,36 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                 </div>
               )}
             </div>
-            <User className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors" />
+            {/* User Icon / Login */}
+            <div className="relative">
+              {isLoggedIn ? (
+                <div className="flex items-center space-x-2 cursor-pointer group">
+                  <div className="w-8 h-8 bg-sage-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-sage-700 hidden md:block">{user?.name}</span>
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    <div className="py-2">
+                      <button
+                        onClick={logout}
+                        className="w-full px-4 py-2 text-left text-sage-700 hover:bg-sage-50 hover:text-sage-600 transition-colors flex items-center space-x-2"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowLoginModal(true)}
+                  className="h-6 w-6 text-sage-700 cursor-pointer hover:text-sage-900 transition-colors"
+                  title="Login or Sign Up"
+                >
+                  <User className="h-6 w-6" />
+                </button>
+              )}
+            </div>
             <div className="relative" onMouseEnter={() => setShowCart(true)} onMouseLeave={() => setShowCart(false)}>
               <ShoppingCart
                 className={`h-6 w-6 text-sage-700 hover:text-sage-900 transition-colors ${animate ? 'animate-bounce' : ''}`}
@@ -263,8 +296,19 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                             <span>Total:</span>
                             <span>Ksh {cart.reduce((sum, item) => sum + parseInt(item.price.replace('Ksh ', '')) * item.quantity, 0)}</span>
                           </div>
-                          <button className="w-full mt-4 bg-sage-600 text-white py-2 rounded hover:bg-sage-700">
-                            Checkout
+                          <button
+                            onClick={() => {
+                              if (!isLoggedIn) {
+                                setShowLoginModal(true);
+                                setShowCart(false);
+                              } else {
+                                // Proceed with checkout logic
+                                alert('Proceeding to checkout...');
+                              }
+                            }}
+                            className="w-full mt-4 bg-sage-600 text-white py-2 rounded hover:bg-sage-700"
+                          >
+                            {isLoggedIn ? 'Checkout' : 'Login to Checkout'}
                           </button>
                         </div>
                       </>
@@ -306,6 +350,9 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
           </div>
         )}
       </div>
+
+      {/* Login Modal */}
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </header>
   );
 };

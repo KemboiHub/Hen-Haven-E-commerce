@@ -9,6 +9,7 @@ import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import ContactSection from './components/ContactSection';
 import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home');
@@ -83,15 +84,17 @@ function App() {
   };
 
   return (
-    <CartProvider>
-      <div className="min-h-screen bg-cream-50">
-        <Header activeSection={activeSection} navigateToSection={navigateToSection} setActiveSection={setActiveSection} />
-        <main>
-          {renderSection()}
-        </main>
-        <Footer />
-      </div>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <div className="min-h-screen bg-cream-50">
+          <Header activeSection={activeSection} navigateToSection={navigateToSection} setActiveSection={setActiveSection} />
+          <main>
+            {renderSection()}
+          </main>
+          <Footer />
+        </div>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

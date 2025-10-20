@@ -1,7 +1,10 @@
-# TODO: Update Hover Effects to Brighter Colors
+# TODO: Implement Login Button and Authentication Prompt
 
-- [x] Update hover effects in Header.tsx to brighter sage shades
-- [x] Update hover effects in VaccineSection.tsx to brighter sage shades
-- [x] Update hover effects in Footer.tsx to brighter sage shades
-- [ ] Update hover effects in FeaturedProducts.tsx to brighter sage shades
-- [ ] Update hover effects in ContactSection.tsx to brighter sage shades
+## Steps to Complete
+
+- [x] Create AuthContext (src/context/AuthContext.tsx) to manage user authentication state (login status, user data).
+- [x] Create LoginModal component (src/components/LoginModal.tsx) with creative design: animated modal with login/signup tabs, form validation, and simulated authentication.
+- [ ] Update Header.tsx: Make the User icon clickable to open the LoginModal; display user info if logged in.
+- [ ] Update Header.tsx: Modify the cart checkout button to check if user is logged in; if not, open the LoginModal instead of proceeding to checkout.
+- [ ] Test the login flow and cart checkout prompt.
+- [ ] If needed, integrate with a real backend for persistent auth.
