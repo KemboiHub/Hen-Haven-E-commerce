@@ -67,11 +67,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       if (success) {
         onClose();
         setFormData({ name: '', email: '', password: '' });
+        setErrors({});
       } else {
-        setErrors({ general: 'Authentication failed. Please try again.' });
+        setErrors({ general: 'Invalid email or password. Please try again.' });
       }
-    } catch (error) {
-      setErrors({ general: 'An error occurred. Please try again.' });
+    } catch (error: any) {
+      setErrors({ general: error.message || 'An error occurred. Please try again.' });
     } finally {
       setIsLoading(false);
     }
