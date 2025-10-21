@@ -19,6 +19,7 @@ interface CartItem extends Product {
 
 interface CartContextType {
   cart: CartItem[];
+  total: number;
   addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
@@ -77,8 +78,13 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart([]);
   };
 
+  const total = cart.reduce((sum, item) => {
+    const price = parseInt(item.price.replace('Ksh ', ''));
+    return sum + (isNaN(price) ? 0 : price) * item.quantity;
+  }, 0);
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
+    <CartContext.Provider value={{ cart, total, addToCart, removeFromCart, updateQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

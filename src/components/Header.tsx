@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cart, removeFromCart, updateQuantity } = useCart();
+  const { cart, total, removeFromCart, updateQuantity } = useCart();
   const [showCart, setShowCart] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -294,7 +294,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                         <div className="border-t pt-4">
                           <div className="flex justify-between font-semibold text-sage-800">
                             <span>Total:</span>
-                            <span>Ksh {cart.reduce((sum, item) => sum + parseInt(item.price.replace('Ksh ', '')) * item.quantity, 0)}</span>
+                            <span>Ksh {total}</span>
                           </div>
                           <button
                             onClick={() => {

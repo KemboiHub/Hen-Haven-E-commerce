@@ -8,3 +8,11 @@
 - [ ] Update Header.tsx: Modify the cart checkout button to check if user is logged in; if not, open the LoginModal instead of proceeding to checkout.
 - [ ] Test the login flow and cart checkout prompt.
 - [ ] If needed, integrate with a real backend for persistent auth.
+
+## TODO: Modify Cart Total Feature
+
+## Steps to Complete
+
+- [ ] Update CartContext.tsx: Add 'total' to CartContextType interface and compute it as the sum of (parseInt(price.replace('Ksh ', '')) * quantity) for all cart items.
+- [ ] Update Header.tsx: Replace inline total calculation with context.total.
+- [ ] Test the cart total display in the header dropdown.
