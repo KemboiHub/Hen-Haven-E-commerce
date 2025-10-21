@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
 
 interface Product {
   id: number;
@@ -78,10 +78,23 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart([]);
   };
 
-  const total = cart.reduce((sum, item) => {
-    const price = parseInt(item.price.replace('Ksh ', ''));
-    return sum + (isNaN(price) ? 0 : price) * item.quantity;
-  }, 0);
+  // Robust price parser: strips currency symbols, commas and spaces, supports decimals
+  const parsePrice = (price: string | number) => {
+    if (typeof price === 'number') return price;
+    if (!price) return 0;
+    const cleaned = String(price).replace(/[^0-9.-]+/g, '');
+    const n = parseFloat(cleaned);
+    return isNaN(n) ? 0 : n;
+  };
+
+  // Use useMemo so total recalculates only when cart changes
+  const total = useMemo(() => {
+    return cart.reduce((sum, item) => {
+      const price = parsePrice(item.price);
+      const qty = item.quantity ?? 0;
+      return sum + price * qty;
+    }, 0);
+  }, [cart]);
 
   return (
     <CartContext.Provider value={{ cart, total, addToCart, removeFromCart, updateQuantity, clearCart }}>
