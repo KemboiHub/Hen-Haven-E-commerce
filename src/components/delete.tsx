@@ -156,3 +156,91 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           name: 'Jane Smith',
           password: 'password123'
 
+// ...existing code...
+import React, { createContext, useContext, useState, useMemo } from 'react';
+
+interface CartItem {
+  id: number | string;
+  name: string;
+  price: number | string; // existing code may store "Ksh 999" strings
+  quantity?: number;
+  // ...other fields...
+}
+
+interface CartContextValue {
+  cart: CartItem[];
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (id: number | string) => void;
+  updateQuantity: (id: number | string, qty: number) => void;
+  total: number;
+  formattedTotal: string;
+  // ...other values...
+}
+
+const CartContext = createContext<CartContextValue | undefined>(undefined);
+
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const parsePrice = (p: number | string) => {
+    if (typeof p === 'number') return p;
+    if (!p) return 0;
+    // Remove any non-numeric characters (currency symbols, commas, spaces) and parse float
+    const cleaned = String(p).replace(/[^0-9.-]+/g, '');
+    const n = parseFloat(cleaned);
+    return isNaN(n) ? 0 : n;
+  };
+
+  const addToCart = (item: CartItem) => {
+    setCart(prev => {
+      const found = prev.find(i => i.id === item.id);
+      if (found) {
+        return prev.map(i => i.id === item.id ? { ...i, quantity: (i.quantity || 1) + (item.quantity || 1) } : i);
+      }
+      return [...prev, { ...item, quantity: item.quantity ?? 1 }];
+    });
+  };
+
+  const removeFromCart = (id: number | string) => {
+    setCart(prev => prev.filter(i => i.id !== id));
+  };
+
+  const updateQuantity = (id: number | string, qty: number) => {
+    setCart(prev => prev.map(i => i.id === id ? { ...i, quantity: Math.max(0, qty) } : i));
+  };
+
+  // Calculate total (raw number) and formatted total
+  const total = useMemo(() => {
+    return cart.reduce((acc, item) => {
+      const price = parsePrice(item.price);
+      const qty = item.quantity ?? 1;
+      return acc + price * qty;
+    }, 0);
+  }, [cart]);
+
+  const formattedTotal = useMemo(() => {
+    // Format with currency prefix (adjust to Ksh or preferred currency)
+    return `Ksh ${total.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+  }, [total]);
+
+  return (
+    <CartContext.Provider value={{
+      cart,
+      addToCart,
+      removeFromCart,
+      updateQuantity,
+      total,
+      formattedTotal,
+      // ...other values...
+    }}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+export const useCart = () => {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used within CartProvider');
+  return ctx;
+};
+// ...existing code...
