@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
     { id: 2, name: "Farm Fresh Eggs", category: "Dozen", price: "Ksh 750", image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg" },
     { id: 3, name: "Premium Layer Feed", category: "20lb Bag", price: "Ksh 1500", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
     { id: 4, name: "Kari Improved Kienyeji", category: "Broilers", price: "Ksh 1200", image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg" },
-    { id: 5, name: "Baby Chicks", category: "Chicks", price: "Ksh 50", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
+    { id: 5, name: "Baby Chicks", category: "
     { id: 6, name: "Growing Birds", category: "Poultry", price: "Ksh 200", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 7, name: "Production Ready", category: "Layers/Broilers", price: "Ksh 800", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 8, name: "Starter Feed", category: "Feed", price: "Ksh 45", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
@@ -66,29 +66,44 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
     { id: 'contact', label: 'CONTACT US' }
   ];
 
-  // handle checkout: initiates STK push via backend
+  // handle checkout: initiates STK push via backend (use phone from user profile)
   const handleCheckout = async () => {
     if (!isLoggedIn) {
       setShowLoginModal(true);
       setShowCart(false);
       return;
     }
+
     if (!cart || cart.length === 0 || !total || total <= 0) {
       setPaymentMessage('Cart is empty');
       return;
     }
-    const phoneRaw = prompt('Enter phone number in format 2547XXXXXXXX (no + or 0):');
-    if (!phoneRaw) {
-      setPaymentMessage('Phone number required');
+
+    // Get phone from user profile (must have been provided at signup)
+    const profilePhoneRaw = (user as any)?.phone || (user as any)?.phoneNumber || (user as any)?.mobile || (user as any)?.contact;
+    if (!profilePhoneRaw) {
+      setPaymentMessage('No phone number on your profile. Please add a phone number in your account before checkout.');
+      // Optionally open account/profile modal so user can add phone
+      setShowCart(false);
+      setShowLoginModal(true);
       return;
     }
-    const phone = phoneRaw.trim();
+
+    // Normalize phone formats: +2547..., 07..., 2547...
+    let phone = String(profilePhoneRaw).trim().replace(/^\+/, '');
+    if (/^0/.test(phone)) phone = '254' + phone.slice(1);
+
+    // Validate expected Daraja format
     if (!/^2547\d{8}$/.test(phone)) {
-      setPaymentMessage('Phone must be in format 2547XXXXXXXX');
+      setPaymentMessage('Phone on profile is invalid. Please update it to format 2547XXXXXXXX in your account.');
+      setShowCart(false);
+      setShowLoginModal(true);
       return;
     }
+
     setProcessingPayment(true);
     setPaymentMessage(null);
+
     try {
       const resp = await fetch('http://localhost:5000/api/mpesa/stkpush', {
         method: 'POST',

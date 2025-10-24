@@ -15,8 +15,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     email: '',
     password: '',
   });
+  const [phone, setPhone] = useState(''); // phone for signup
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [generalError, setGeneralError] = useState<string | null>(null);
 
   const { login, signup } = useAuth();
 
@@ -26,6 +28,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+    setGeneralError(null);
   };
 
   const validateForm = () => {
@@ -47,32 +50,48 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       newErrors.name = 'Name is required';
     }
 
+    if (!isLogin) {
+      const normalizedPhone = phone.trim().replace(/^\+/, '');
+      const phoneToValidate = /^0/.test(normalizedPhone) ? '254' + normalizedPhone.slice(1) : normalizedPhone;
+      if (!phoneToValidate || !/^2547\d{8}$/.test(phoneToValidate)) {
+        newErrors.phone = 'Enter phone in format 7XXXXXXXX or 0722xxxxxxx (will be normalized to 2547...)';
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setGeneralError(null);
     if (!validateForm()) return;
 
     setIsLoading(true);
     try {
-      let success;
       if (isLogin) {
-        success = await login(formData.email, formData.password);
+        const success = await login(formData.email, formData.password);
+        if (success) {
+          onClose();
+          setFormData({ name: '', email: '', password: '' });
+          setPhone('');
+          setErrors({});
+        } else {
+          setGeneralError('Invalid email or password. Please try again.');
+        }
       } else {
-        success = await signup(formData.name, formData.email, formData.password);
-      }
-
-      if (success) {
+        // normalize phone
+        let normalizedPhone = phone.trim().replace(/^\+/, '');
+        if (/^0/.test(normalizedPhone)) normalizedPhone = '254' + normalizedPhone.slice(1);
+        // call signup with an object payload (adjust if your auth expects different signature)
+        await signup({ name: formData.name, email: formData.email, password: formData.password, phone: normalizedPhone });
         onClose();
         setFormData({ name: '', email: '', password: '' });
+        setPhone('');
         setErrors({});
-      } else {
-        setErrors({ general: 'Invalid email or password. Please try again.' });
       }
-    } catch (error: any) {
-      setErrors({ general: error.message || 'An error occurred. Please try again.' });
+    } catch (err: any) {
+      setGeneralError(err?.message || 'An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -105,21 +124,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         {/* Tabs */}
         <div className="flex border-b border-sage-100">
           <button
-            onClick={() => setIsLogin(true)}
+            onClick={() => { setIsLogin(true); setGeneralError(null); setErrors({}); }}
             className={`flex-1 py-4 px-6 text-center font-medium transition-colors ${
-              isLogin
-                ? 'text-sage-600 border-b-2 border-sage-600'
-                : 'text-sage-400 hover:text-sage-600'
+              isLogin ? 'text-sage-600 border-b-2 border-sage-600' : 'text-sage-400 hover:text-sage-600'
             }`}
           >
             Login
           </button>
           <button
-            onClick={() => setIsLogin(false)}
+            onClick={() => { setIsLogin(false); setGeneralError(null); setErrors({}); }}
             className={`flex-1 py-4 px-6 text-center font-medium transition-colors ${
-              !isLogin
-                ? 'text-sage-600 border-b-2 border-sage-600'
-                : 'text-sage-400 hover:text-sage-600'
+              !isLogin ? 'text-sage-600 border-b-2 border-sage-600' : 'text-sage-400 hover:text-sage-600'
             }`}
           >
             Sign Up
@@ -128,17 +143,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {errors.general && (
+          {generalError && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
-              {errors.general}
+              {generalError}
             </div>
           )}
 
           {!isLogin && (
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-2">
-                Full Name
-              </label>
+              <label className="block text-sm font-medium text-sage-700 mb-2">Full Name</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-sage-400" />
                 <input
@@ -152,16 +165,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   placeholder="Enter your full name"
                 />
               </div>
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-              )}
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-sage-700 mb-2">
-              Email Address
-            </label>
+            <label className="block text-sm font-medium text-sage-700 mb-2">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-sage-400" />
               <input
@@ -175,15 +184,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 placeholder="Enter your email"
               />
             </div>
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-            )}
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-sage-700 mb-2">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-sage-700 mb-2">Password</label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-sage-400" />
               <input
@@ -204,10 +209,35 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-            )}
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
+
+          {!isLogin && (
+            <div className="flex flex-col gap-4">
+              {/* Creative phone input block */}
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0">
+                  <div className="inline-flex items-center px-3 py-2 bg-sage-50 border border-sage-200 rounded">
+                    <span className="text-sm text-sage-700">+254</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs text-sage-600 mb-1">Phone number</label>
+                  <input
+                    value={phone}
+                    onChange={e => { setPhone(e.target.value); if (errors.phone) setErrors(prev => ({ ...prev, phone: '' })); }}
+                    placeholder="7XXXXXXXX"
+                    type="tel"
+                    className={`w-full px-3 py-2 border rounded ${errors.phone ? 'border-red-300' : 'border-sage-200'}`}
+                  />
+                  <p className="text-xs text-sage-500 mt-1">
+                    We'll use this number for payment prompts and order updates. Enter without leading 0 (e.g. 722123456).
+                  </p>
+                  {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+                </div>
+              </div>
+            </div>
+          )}
 
           <button
             type="submit"
@@ -223,17 +253,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               isLogin ? 'Login to Your Account' : 'Create Your Account'
             )}
           </button>
-
-          {isLogin && (
-            <div className="text-center">
-              <button
-                type="button"
-                className="text-sage-600 hover:text-sage-700 text-sm font-medium"
-              >
-                Forgot your password?
-              </button>
-            </div>
-          )}
         </form>
 
         {/* Footer */}
@@ -241,7 +260,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           <div className="text-center text-sm text-sage-600">
             {isLogin ? "Don't have an account? " : 'Already have an account? '}
             <button
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => { setIsLogin(!isLogin); setGeneralError(null); setErrors({}); }}
               className="text-sage-600 hover:text-sage-700 font-medium"
             >
               {isLogin ? 'Sign up here' : 'Login here'}
