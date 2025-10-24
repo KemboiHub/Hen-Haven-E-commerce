@@ -9,28 +9,11 @@ interface HeaderProps {
   navigateToSection: (section: string) => void;
   setActiveSection: (section: string) => void;
 }
-const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch("http://localhost:5000/api/stkpush", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({total}),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setMessage('Payment successful!');
-      })
-      .catch((error) => {
-        console.error(error);
-        setMessage('Payment failed!');
-      });
-  };
 const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart, total, removeFromCart, updateQuantity } = useCart();
+  const [paymentMessage, setPaymentMessage] = useState<string | null>(null);
+  const [processingPayment, setProcessingPayment] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -82,6 +65,50 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
     { id: 'blog', label: 'BLOG' },
     { id: 'contact', label: 'CONTACT US' }
   ];
+
+  // handle checkout: initiates STK push via backend
+  const handleCheckout = async () => {
+    if (!isLoggedIn) {
+      setShowLoginModal(true);
+      setShowCart(false);
+      return;
+    }
+    if (!cart || cart.length === 0 || !total || total <= 0) {
+      setPaymentMessage('Cart is empty');
+      return;
+    }
+    const phoneRaw = prompt('Enter phone number in format 2547XXXXXXXX (no + or 0):');
+    if (!phoneRaw) {
+      setPaymentMessage('Phone number required');
+      return;
+    }
+    const phone = phoneRaw.trim();
+    if (!/^2547\d{8}$/.test(phone)) {
+      setPaymentMessage('Phone must be in format 2547XXXXXXXX');
+      return;
+    }
+    setProcessingPayment(true);
+    setPaymentMessage(null);
+    try {
+      const resp = await fetch('http://localhost:5000/api/mpesa/stkpush', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, amount: Math.round(total), accountReference: 'HenHavenOrder' })
+      });
+      const data = await resp.json();
+      if (!resp.ok) {
+        setPaymentMessage(`Payment initiation failed: ${data.error || data.Message || JSON.stringify(data)}`);
+      } else {
+        setPaymentMessage('STK Push sent. Check your phone to complete payment.');
+        setShowCart(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setPaymentMessage('Network error sending STK push');
+    } finally {
+      setProcessingPayment(false);
+    }
+  };
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
@@ -314,20 +341,16 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                             <span>Total:</span>
                             <span>Ksh {total}</span>
                           </div>
-                          <button type="submit"
-                            onClick={() => {
-                              if (!isLoggedIn) {
-                                setShowLoginModal(true);
-                                setShowCart(false);
-                              } else {
-                                // Proceed with checkout logic
-                                alert('Proceeding to checkout...');
-                              }
-                            }}
-                            className="w-full mt-4 bg-sage-600 text-white py-2 rounded hover:bg-sage-700"
+                          <button
+                            onClick={handleCheckout}
+                            disabled={processingPayment}
+                            className="w-full mt-4 bg-sage-600 text-white py-2 rounded hover:bg-sage-700 disabled:opacity-60"
                           >
-                            {isLoggedIn ? 'Checkout' : 'Login to Checkout'}
+                            {processingPayment ? 'Processing...' : isLoggedIn ? 'Checkout' : 'Login to Checkout'}
                           </button>
+                          {paymentMessage && (
+                            <p className="mt-2 text-sm text-red-500">{paymentMessage}</p>
+                          )}
                         </div>
                       </>
                     )}
