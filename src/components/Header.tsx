@@ -9,7 +9,25 @@ interface HeaderProps {
   navigateToSection: (section: string) => void;
   setActiveSection: (section: string) => void;
 }
-
+const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:5000/api/stkpush", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({total}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setMessage('Payment successful!');
+      })
+      .catch((error) => {
+        console.error(error);
+        setMessage('Payment failed!');
+      });
+  };
 const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart, total, removeFromCart, updateQuantity } = useCart();
@@ -296,7 +314,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
                             <span>Total:</span>
                             <span>Ksh {total}</span>
                           </div>
-                          <button
+                          <button type="submit"
                             onClick={() => {
                               if (!isLoggedIn) {
                                 setShowLoginModal(true);
