@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { user, isLoggedIn, logout } = useAuth();
 
-   const products = [
+     const products = [
     { id: 1, name: "Kenbro Improved Kienyeji", category: "Layers", price: "Ksh 999", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 2, name: "Farm Fresh Eggs", category: "Dozen", price: "Ksh 750", image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg" },
     { id: 3, name: "Premium Layer Feed", category: "20lb Bag", price: "Ksh 1500", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
