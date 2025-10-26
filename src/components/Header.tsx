@@ -21,18 +21,18 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { user, isLoggedIn, logout } = useAuth();
 
-  const products = [
+   const products = [
     { id: 1, name: "Kenbro Improved Kienyeji", category: "Layers", price: "Ksh 999", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 2, name: "Farm Fresh Eggs", category: "Dozen", price: "Ksh 750", image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg" },
     { id: 3, name: "Premium Layer Feed", category: "20lb Bag", price: "Ksh 1500", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
     { id: 4, name: "Kari Improved Kienyeji", category: "Broilers", price: "Ksh 1200", image: "https://images.pexels.com/photos/33378064/pexels-photo-33378064.jpeg" },
-    { id: 5, name: "Baby Chicks", category: "
+    { id: 5, name: "Baby Chicks", category: "Chicks", price: "Ksh 250", image: "https://images.pexels.com/photos/1030975/pexels-photo-1030975.jpeg" },
     { id: 6, name: "Growing Birds", category: "Poultry", price: "Ksh 200", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 7, name: "Production Ready", category: "Layers/Broilers", price: "Ksh 800", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 8, name: "Starter Feed", category: "Feed", price: "Ksh 45", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
     { id: 9, name: "Grower Feed", category: "Feed", price: "Ksh 42", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
     { id: 10, name: "Layer Feed", category: "Feed", price: "Ksh 48", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
-    { id: 11, name: "Broiler Feed", category: "Feed", price: "Ksh 50", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" },
+    { id: 11, name: "Broiler Feed", category: "Feed", price: "Ksh 50", image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg" }
   ];
 
   const searchResults = products.filter(product =>
