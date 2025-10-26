@@ -48,8 +48,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
     }
   }, [cart.length]);
 
-  +  // safe sum in case quantity is undefined
-+  const cartCount = cart.reduce((sum, item) => sum + (item.quantity ?? 0), 0);
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const navigationItems = [
     { id: 'home', label: 'HOME' },
