@@ -4,13 +4,14 @@ interface User {
   id: string;
   email: string;
   name: string;
+  phone?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   isLoggedIn: boolean;
   login: (email: string, password: string) => Promise<boolean>;
-  signup: (name: string, email: string, password: string) => Promise<boolean>;
+  signup: (userData: { name: string; email: string; password: string; phone: string }) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -88,7 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return true;
   };
 
-  const signup = async (name: string, email: string, password: string): Promise<boolean> => {
+  const signup = async (userData: { name: string; email: string; password: string; phone: string }): Promise<boolean> => {
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -96,7 +97,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const users = JSON.parse(localStorage.getItem('henHavenUsers') || '[]');
 
     // Check if user already exists
-    const existingUser = users.find((u: any) => u.email === email);
+    const existingUser = users.find((u: any) => u.email === userData.email);
     if (existingUser) {
       throw new Error('An account with this email already exists');
     }
@@ -104,21 +105,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Create new user
     const newUser = {
       id: Date.now().toString(),
-      email,
-      name,
-      password,
+      email: userData.email,
+      name: userData.name,
+      password: userData.password,
+      phone: userData.phone,
     };
 
     users.push(newUser);
     localStorage.setItem('henHavenUsers', JSON.stringify(users));
 
-    const userData: User = {
+    const userDataToSet: User = {
       id: newUser.id,
       email: newUser.email,
       name: newUser.name,
+      phone: newUser.phone,
     };
-    setUser(userData);
-    localStorage.setItem('currentUser', JSON.stringify(userData));
+    setUser(userDataToSet);
+    localStorage.setItem('currentUser', JSON.stringify(userDataToSet));
     return true;
   };
 
