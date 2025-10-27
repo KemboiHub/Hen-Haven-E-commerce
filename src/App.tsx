@@ -84,17 +84,13 @@ function App() {
   };
 
   return (
-    <AuthProvider>
-      <CartProvider>
-        <div className="min-h-screen bg-cream-50">
-          <Header activeSection={activeSection} navigateToSection={navigateToSection} setActiveSection={setActiveSection} />
-          <main>
-            {renderSection()}
-          </main>
-          <Footer />
-        </div>
-      </CartProvider>
-    </AuthProvider>
+    <div className="min-h-screen bg-cream-50">
+      <Header activeSection={activeSection} navigateToSection={navigateToSection} setActiveSection={setActiveSection} />
+      <main>
+        {renderSection()}
+      </main>
+      <Footer />
+    </div>
   );
 }
 
