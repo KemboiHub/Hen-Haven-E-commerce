@@ -8,8 +8,6 @@ import VaccineSection from './components/VaccineSection';
 import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import ContactSection from './components/ContactSection';
-import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext';
 
 function App() {
   const [currentSection, setCurrentSection] = useState('home');
@@ -63,7 +61,7 @@ function App() {
       case 'shop':
         return <CategorySection navigateToSection={navigateToSection} goBack={goBack} />;
       case 'feeds':
-        return <FeedsSection goBack={goBack} />;
+        return <FeedsSection />;
       case 'vaccine':
         return <VaccineSection navigateToSection={navigateToSection} goBack={goBack} />;
       case 'contact':
@@ -84,17 +82,13 @@ function App() {
   };
 
   return (
-    <AuthProvider>
-      <CartProvider>
-        <div className="min-h-screen bg-cream-50">
-          <Header activeSection={activeSection} navigateToSection={navigateToSection} setActiveSection={setActiveSection} />
-          <main>
-            {renderSection()}
-          </main>
-          <Footer />
-        </div>
-      </CartProvider>
-    </AuthProvider>
+    <div className="min-h-screen bg-cream-50">
+      <Header activeSection={activeSection} navigateToSection={navigateToSection} setActiveSection={setActiveSection} />
+      <main>
+        {renderSection()}
+      </main>
+      <Footer />
+    </div>
   );
 }
 
