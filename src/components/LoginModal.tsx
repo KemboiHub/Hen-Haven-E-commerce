@@ -226,7 +226,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                   <input
                     value={phone}
                     onChange={e => { setPhone(e.target.value); if (errors.phone) setErrors(prev => ({ ...prev, phone: '' })); }}
-                    placeholder="7XXXXXXXX"
+                    placeholder="07XXXXXXXX"
                     type="tel"
                     className={`w-full px-3 py-2 border rounded ${errors.phone ? 'border-red-300' : 'border-sage-200'}`}
                   />
