@@ -186,25 +186,30 @@ const PaymentForm = () => {
     setPaymentMessage(null);
 
     try {
-      const resp = await fetch('http://localhost:5000/api/mpesa/stkpush', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, amount: Math.round(total), accountReference: 'HenHavenOrder' })
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:5000/api/stkpush", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ phone, amount: Math.round(total), accountReference: 'HenHavenOrder' })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setPaymentMessage('Payment successful!');
+      })
+      .catch((error) => {
+        console.error(error);
+        setPaymentMessage('Payment failed!');
       });
-      const data = await resp.json();
-      if (!resp.ok) {
-        setPaymentMessage(`Payment initiation failed: ${data.error || data.Message || JSON.stringify(data)}`);
-      } else {
-        setPaymentMessage('STK Push sent. Check your phone to complete payment.');
-        setShowCart(false);
-      }
-    } catch (err) {
-      console.error(err);
-      setPaymentMessage('Network error sending STK push');
-    } finally {
-      setProcessingPayment(false);
-    }
-  };
+  } catch (error) {
+    console.error(error);
+    setPaymentMessage('Payment failed!');
+  } finally {
+    setProcessingPayment(false);
+  }
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
