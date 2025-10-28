@@ -6,62 +6,6 @@ interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-const PaymentForm = () => {
-  const [phone, setPhone] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [amount, setAmount] = useState('');
-  const [message, setMessage] = useState('');
-
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
-  };
-
-  const handleAccountNumberChange = (e) => {
-    setAccountNumber(e.target.value);
-  };
-
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch("http://localhost:5000/api/stkpush", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ phone: phone, accountNumber: accountNumber, amount: amount }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setMessage('Payment successful!');
-      })
-      .catch((error) => {
-        console.error(error);
-        setMessage('Payment failed!');
-      });
-  };
-
-  return (
-    les.formGroup}>
-        <label htmlFor="amount" style={styles.label}>Amount</label>
-        <input
-          type="number"
-          id="amount"
-          value={amount}
-          onChange={handleAmountChange}
-          style={styles.input}
-          required
-        />
-      </div>
-      <button type="submit" style={styles.button}>Pay Now</button>
-
-
-    </form>
-  );
-};
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
