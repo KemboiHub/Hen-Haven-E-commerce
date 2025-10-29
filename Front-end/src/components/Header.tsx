@@ -26,6 +26,25 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
   // safe cart count
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity ?? 0), 0);
 
+  // derive a safe user initial (handles string, object or missing name)
+  const userInitial = (() => {
+    const name = (user as any)?.name;
+    if (typeof name === 'string' && name.length > 0) return name.charAt(0).toUpperCase();
+    if (name && typeof name === 'object') {
+      const first =
+        (name as any).first ||
+        (name as any).firstName ||
+        (name as any).fullName ||
+        (name as any).displayName;
+      if (typeof first === 'string' && first.length > 0) return first.charAt(0).toUpperCase();
+      const asString = String(name);
+      if (asString && asString !== '[object Object]') return asString.charAt(0).toUpperCase();
+    }
+    const alt = (user as any)?.email || (user as any)?.phone || (user as any)?.phoneNumber;
+    if (typeof alt === 'string' && alt.length > 0) return alt.charAt(0).toUpperCase();
+    return '';
+  })();
+
   const products = [
     { id: 1, name: "Kenbro Improved Kienyeji", category: "Layers", price: "Ksh 999", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 2, name: "Farm Fresh Eggs", category: "Dozen", price: "Ksh 750", image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg" },
@@ -82,30 +101,30 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, 
   const [message, setMessage] = useState('');
   const [processing, setProcessing] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setProcessing(true);
-    setMessage('');
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setProcessing(true);
+  //   setMessage('');
 
-    try {
-      const response = await fetch("http://localhost:5000/api/stkpush", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phone, accountNumber, amount: parseInt(amount) }),
-      });
-      const data = await response.json();
-      console.log(data);
-      setMessage('STK Push sent successfully! Check your phone.');
-      onSuccess();
-    } catch (error) {
-      console.error(error);
-      setMessage('Payment failed! Please try again.');
-    } finally {
-      setProcessing(false);
-    }
-  };
+  //   try {
+  //     const response = await fetch("http://localhost:5000/api/stkpush", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ phone, accountNumber, amount: parseInt(amount) }),
+  //     });
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setMessage('STK Push sent successfully! Check your phone.');
+  //     onSuccess();
+  //   } catch (error) {
+  //     console.error(error);
+  //     setMessage('Payment failed! Please try again.');
+  //   } finally {
+  //     setProcessing(false);
+  //   }
+  // };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -364,7 +383,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, 
               {isLoggedIn ? (
                 <div className="flex items-center space-x-2 cursor-pointer group">
                   <div className="w-8 h-8 bg-sage-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                    {user?.name?.charAt(0).toUpperCase()}
+                    {userInitial || '?'}
                   </div>
                   <span className="text-sage-700 hidden md:block">{user?.name}</span>
                   <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
