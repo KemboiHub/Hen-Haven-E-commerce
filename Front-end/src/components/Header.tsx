@@ -45,6 +45,24 @@ const Header: React.FC<HeaderProps> = ({ activeSection, navigateToSection, setAc
     return '';
   })();
 
+  // derive a safe display name string (never render an object)
+  const userDisplayName = (() => {
+    const name = (user as any)?.name;
+    if (typeof name === 'string' && name.trim()) return name;
+    if (name && typeof name === 'object') {
+      const first =
+        (name as any).first ||
+        (name as any).firstName ||
+        (name as any).fullName ||
+        (name as any).displayName;
+      if (typeof first === 'string' && first.trim()) return first;
+      // fallback to email or phone if name object is not usable
+    }
+    if ((user as any)?.email) return (user as any).email;
+    if ((user as any)?.phone) return (user as any).phone;
+    return '';
+  })();
+
   const products = [
     { id: 1, name: "Kenbro Improved Kienyeji", category: "Layers", price: "Ksh 999", image: "https://images.pexels.com/photos/16733491/pexels-photo-16733491.jpeg" },
     { id: 2, name: "Farm Fresh Eggs", category: "Dozen", price: "Ksh 750", image: "https://images.pexels.com/photos/1556707/pexels-photo-1556707.jpeg" },
@@ -95,36 +113,39 @@ interface PaymentFormProps {
 }
 
 const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, onSuccess, onClose }) => {
-  const [phone, setPhone] = useState(initialPhone);
-  const [accountNumber, setAccountNumber] = useState('HenHavenOrder');
-  const [amount, setAmount] = useState(initialAmount.toString());
-  const [message, setMessage] = useState('');
-  const [processing, setProcessing] = useState(false);
+    const [phone, setPhone] = useState(initialPhone);
+    const [accountNumber, setAccountNumber] = useState('HenHavenOrder');
+    const [amount, setAmount] = useState(initialAmount.toString());
+    const [message, setMessage] = useState('');
+    const [processing, setProcessing] = useState(false);
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setProcessing(true);
-  //   setMessage('');
-
-  //   try {
-  //     const response = await fetch("http://localhost:5000/api/stkpush", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ phone, accountNumber, amount: parseInt(amount) }),
-  //     });
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setMessage('STK Push sent successfully! Check your phone.');
-  //     onSuccess();
-  //   } catch (error) {
-  //     console.error(error);
-  //     setMessage('Payment failed! Please try again.');
-  //   } finally {
-  //     setProcessing(false);
-  //   }
-  // };
+    // submit STK push via backend
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setProcessing(true);
+      setMessage('');
+      try {
+        const cleanedPhone = String(phone).trim().replace(/^\+/, '').replace(/^0/, '254');
+        const numericAmount = Math.max(1, Math.round(Number(amount) || 0));
+        const resp = await fetch('http://localhost:5000/api/mpesa/stkpush', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: cleanedPhone, amount: numericAmount, accountReference: accountNumber })
+        });
+        const data = await resp.json();
+        if (!resp.ok) {
+          setMessage(`Failed: ${data.error || JSON.stringify(data)}`);
+        } else {
+          setMessage('STK Push sent. Check your phone to complete payment.');
+          onSuccess();
+        }
+      } catch (err) {
+        console.error(err);
+        setMessage('Network error sending STK push');
+      } finally {
+        setProcessing(false);
+      }
+    };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -385,7 +406,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, 
                   <div className="w-8 h-8 bg-sage-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
                     {userInitial || '?'}
                   </div>
-                  <span className="text-sage-700 hidden md:block">{user?.name}</span>
+                  <span className="text-sage-700 hidden md:block">{userDisplayName || 'Account'}</span>
                   <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="py-2">
                       <button
