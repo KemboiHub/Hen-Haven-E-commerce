@@ -79,4 +79,6 @@ const BlogSection: React.FC<BlogSectionProps> = ({ goBack }) => {
     { name: "All Posts", count: 24, active: true },
 
     { name: "Care Guide", count: 8 },
+    { name: "Health", count: 6 },
+    { name: "Nutrition", count: 5 },    
   
