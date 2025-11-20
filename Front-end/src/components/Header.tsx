@@ -430,15 +430,20 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, 
                 </button>
               )}
             </div>
-            <div className="relative" onMouseEnter={() => setShowCart(true)} onMouseLeave={() => setShowCart(false)}>
-              <ShoppingCart
-                className={`h-6 w-6 text-sage-700 hover:text-sage-900 transition-colors ${animate ? 'animate-bounce' : ''}`}
-              />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-sage-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
+            <div className="relative">
+              <button
+                onClick={() => navigateToSection('cart')}
+                className="relative"
+              >
+                <ShoppingCart
+                  className={`h-6 w-6 text-sage-700 hover:text-sage-900 transition-colors ${animate ? 'animate-bounce' : ''}`}
+                />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-sage-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
               {showCart && (
                 <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border z-50">
                   <div className="p-4">

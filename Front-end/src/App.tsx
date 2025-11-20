@@ -8,6 +8,7 @@ import VaccineSection from './components/VaccineSection';
 import BlogSection from './components/BlogSection';
 import Footer from './components/Footer';
 import ContactSection from './components/ContactSection';
+import Cart from './components/Cart';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 
@@ -70,6 +71,8 @@ function App() {
         return <ContactSection goBack={goBack} />;
       case 'blog':
         return <BlogSection goBack={goBack} />;
+      case 'cart':
+        return <Cart />;
       default:
         return (
           <>
