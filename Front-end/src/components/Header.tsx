@@ -338,13 +338,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, 
                     className="px-3 py-2 border border-sage-200 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-transparent outline-none w-64"
                     autoFocus
                   />
-                  <button
-                    onClick={() => { setShowSearch(false); setSearchQuery(''); }}
-                    className="text-sage-500 hover:text-sage-700"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                  <button/>
+
                   <button
                     onClick={() => {
                       setShowSearch(false);
