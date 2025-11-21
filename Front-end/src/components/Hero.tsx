@@ -106,7 +106,10 @@ const Hero: React.FC<HeroProps> = ({ navigateToSection }) => {
               <div className="text-3xl font-bold">10K+</div>
               <div className="text-sage-200">Birds Delivered</div>
             </div>
-
+            <div className="space-y-2">
+              <div className="text-3xl font-bold">5 Years</div>
+              <div className="text-sage-200">Experience</div>
+            </div>
             <div className="space-y-2">
               <div className="text-3xl font-bold">15+</div>
               <div className="text-sage-200">Breeds Available</div>
