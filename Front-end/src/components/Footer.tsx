@@ -10,6 +10,13 @@ const Footer: React.FC = () => {
     { name: 'Careers', href: '#' }
   ];
 
+  const products = [
+    { name: 'Baby Chicks', href: '#' },
+    { name: 'Adult Chickens', href: '#' },
+    { name: 'Fresh Eggs', href: '#' },
+    { name: 'Poultry Feed', href: '#' },
+    { name: 'Health Supplies', href: '#' }
+  ];
 
   const support = [
     { name: 'Care Guides', href: '#' },
