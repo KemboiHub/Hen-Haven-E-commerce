@@ -72,7 +72,7 @@ function App() {
       case 'blog':
         return <BlogSection goBack={goBack} />;
       case 'cart':
-        return <Cart />;
+        return <Cart navigateToSection={navigateToSection} />;
       default:
         return (
           <>

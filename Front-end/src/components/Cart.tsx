@@ -2,7 +2,11 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Trash2, Plus, Minus } from 'lucide-react';
 
-const Cart: React.FC = () => {
+interface CartProps {
+  navigateToSection?: (section: string) => void;
+}
+
+const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
   const { cart, total, removeFromCart, updateQuantity, clearCart } = useCart();
 
   if (cart.length === 0) {
@@ -11,12 +15,12 @@ const Cart: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-sage-800 mb-8">Your Cart</h1>
           <p className="text-xl text-sage-600 mb-8">Your cart is empty.</p>
-          <a
-            href="#featured-products"
+          <button
+            onClick={() => navigateToSection?.('shop')}
             className="bg-sage-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sage-700 transition-colors"
           >
             Continue Shopping
-          </a>
+          </button>
         </div>
       </div>
     );
