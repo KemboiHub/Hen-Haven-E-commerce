@@ -31,7 +31,7 @@ const server = http.createServer(app);
 
 // ACCESS TOKEN FUNCTION - Updated to use 'axios'
 async function getAccessToken() {
-  const consumer_key = ""; // REPLACE IT WITH YOUR CONSUMER KEY
+  const consumer_key = "LIdTjyHtFwKuJGed5djWPHAAA47WADj5ABDkhgsyXYOJyEBg"; // REPLACE IT WITH YOUR CONSUMER KEY
   const consumer_secret = ""; // REPLACE IT WITH YOUR CONSUMER SECRET
   const url =
     "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
