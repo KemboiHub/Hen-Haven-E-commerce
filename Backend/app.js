@@ -73,6 +73,22 @@ app.get("/access_token", (req, res) => {
 
 //MPESA STK PUSH ROUTE
 app.get("/stkpush", (req, res) => {
+  // Accept phone from query string or body for backward compatibility
+  let phone = req.query.phone || req.query.phoneNumber || req.body?.phone || req.body?.phoneNumber || "";
+
+  // Basic validation
+  if (!phone) {
+    return res.status(400).send("Phone number is required as ?phone= or in request body { phone }");
+  }
+
+  // Normalize phone formats: 07..., +2547..., 2547... -> 2547XXXXXXXX
+  phone = String(phone).trim().replace(/^[+]/, '');
+  if (/^0/.test(phone)) phone = '254' + phone.slice(1);
+
+  if (!/^2547\d{8}$/.test(phone)) {
+    return res.status(400).send("Phone number must be in Kenyan format (e.g. 2547XXXXXXXX)");
+  }
+
   getAccessToken()
     .then((accessToken) => {
       const url =
@@ -94,9 +110,9 @@ app.get("/stkpush", (req, res) => {
             Timestamp: timestamp,
             TransactionType: "CustomerPayBillOnline",
             Amount: "10",
-            PartyA: "", //phone number to receive the stk push
+            PartyA: phone, // use provided user phone
             PartyB: "174379",
-            PhoneNumber: "",
+            PhoneNumber: phone,
             CallBackURL: "https://dd3d-105-160-22-207.ngrok-free.app/callback",
             AccountReference: "UMESKIA PAY",
             TransactionDesc: "Mpesa Daraja API stk push test",
