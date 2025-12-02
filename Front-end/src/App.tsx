@@ -36,7 +36,25 @@ function App() {
     }
   };
 
-  
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'featured-products', 'shop', 'vaccine', 'blog', 'contact', 'feeds'];
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      let current = 'home';
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element && element.offsetTop <= scrollPosition) {
+          if (sectionId === 'home' || sectionId === 'featured-products') {
+            current = 'home';
+          } else {
+            current = sectionId;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
