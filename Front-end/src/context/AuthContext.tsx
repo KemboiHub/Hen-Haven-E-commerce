@@ -103,23 +103,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     // Create new user
-    const newUser = {
-      id: Date.now().toString(),
-      email: userData.email,
-      name: userData.name,
-      password: userData.password,
-      phone: userData.phone,
-    };
-
-    users.push(newUser);
-    localStorage.setItem('henHavenUsers', JSON.stringify(users));
-
-    const userDataToSet: User = {
-      id: newUser.id,
-      email: newUser.email,
-      name: newUser.name,
-      phone: newUser.phone,
-    };
+  
     setUser(userDataToSet);
     localStorage.setItem('currentUser', JSON.stringify(userDataToSet));
     return true;
