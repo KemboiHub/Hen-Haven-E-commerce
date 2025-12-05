@@ -145,13 +145,6 @@ const Footer: React.FC = () => {
               </a>
             </div>
             
-            <div className="text-center lg:text-right text-sage-200 space-y-2 lg:space-y-0 lg:space-x-6 lg:flex lg:items-center">
-              <div className="flex flex-col lg:flex-row lg:space-x-6">
-                <a href="#" className="hover:text-sage-100 transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-sage-100 transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-sage-100 transition-colors">Cookie Policy</a>
-              </div>
-              <div className="text-sm">
                 © 2026 Hen Haven. All rights reserved.
               </div>
             </div>
