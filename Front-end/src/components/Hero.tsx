@@ -81,7 +81,18 @@ const Hero: React.FC<HeroProps> = ({ navigateToSection }) => {
                 />
               </div>
               {/* Floating Cards */}
-
+              <div className="absolute -top-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-sage-800">500+</div>
+                  <div className="text-sm text-sage-600">Happy Customers</div>
+                </div>
+              </div>
+              <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-lg">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-sage-800">99.8%</div>
+                  <div className="text-sm text-sage-600">Health Rate</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
