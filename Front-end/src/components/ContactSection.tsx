@@ -126,19 +126,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phone" className="block text-sage-700 font-medium mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-sage-200 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-transparent transition-colors"
-                    />
-                  </div>
+
                   <div>
                     <label htmlFor="subject" className="block text-sage-700 font-medium mb-2">
                       Subject *
