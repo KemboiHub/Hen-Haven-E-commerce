@@ -26,7 +26,18 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
   };
 
   const contactInfo = [
-
+    {
+      icon: <MapPin className="h-6 w-6" />,
+      title: "Visit Our Farm",
+      details: ["Molo along Nakuru-Eldoret highway"],
+      action: "Get Directions"
+    },
+    {
+      icon: <Phone className="h-6 w-6" />,
+      title: "Call Us",
+      details: ["Roz Poultry", "(+254) 792151754"],
+      action: "Call Now"
+    },
     {
       icon: <Mail className="h-6 w-6" />,
       title: "Email Us",
