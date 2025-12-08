@@ -95,7 +95,20 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
               <h3 className="text-2xl font-bold text-sage-800 mb-6">Send us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
-
+                  <div>
+                    <label htmlFor="name" className="block text-sage-700 font-medium mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-sage-200 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-transparent transition-colors"
+                      required
+                    />
+                  </div>
                   <div>
                     <label htmlFor="email" className="block text-sage-700 font-medium mb-2">
                       Email Address *
