@@ -47,7 +47,22 @@ const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
                 </div>
               </div>
 
-              
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    className="p-1 bg-sage-100 text-sage-600 rounded hover:bg-sage-200 transition-colors"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <span className="w-8 text-center font-medium">{item.quantity}</span>
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    className="p-1 bg-sage-100 text-sage-600 rounded hover:bg-sage-200 transition-colors"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
 
                 <button
                   onClick={() => removeFromCart(item.id)}
