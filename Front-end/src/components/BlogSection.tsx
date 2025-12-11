@@ -44,7 +44,24 @@ const BlogSection: React.FC<BlogSectionProps> = ({ goBack }) => {
       image: "https://images.pexels.com/photos/32727462/pexels-photo-32727462.jpeg",
       category: "Housing"
     },
-
+    {
+      title: "Organic Feed vs. Commercial: What's Best?",
+      excerpt: "Compare the benefits and costs of different feeding approaches for optimal poultry nutrition.",
+      author: "Lisa Nutritionist",
+      date: "March 5, 2024",
+      readTime: "7 min read",
+      image: "https://images.pexels.com/photos/6929172/pexels-photo-6929172.jpeg",
+      category: "Nutrition"
+    },
+    {
+      title: "Seasonal Care Calendar for Poultry",
+      excerpt: "Month-by-month guide to managing your flock throughout the year for optimal health and production.",
+      author: "Farm Team",
+      date: "March 1, 2024",
+      readTime: "15 min read",
+      image: "https://images.pexels.com/photos/14376368/pexels-photo-14376368.jpeg",
+      category: "Management"
+    }
   ];
 
   const categories = [
