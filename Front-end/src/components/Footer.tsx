@@ -167,18 +167,7 @@ const Footer: React.FC = () => {
               </div>
               <span className="text-sm">Secure Payments</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-sage-600 rounded flex items-center justify-center">
-                <span className="text-xs font-bold">24/7</span>
-              </div>
-              <span className="text-sm">Expert Support</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-sage-600 rounded flex items-center justify-center">
-                <span className="text-xs font-bold">★</span>
-              </div>
-              <span className="text-sm">4.9/5 Rating</span>
-            </div>
+            
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-sage-600 rounded flex items-center justify-center">
                 <span className="text-xs font-bold">✓</span>
