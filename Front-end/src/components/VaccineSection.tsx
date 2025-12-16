@@ -65,7 +65,22 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBa
       image: "https://images.pexels.com/photos/4021769/pexels-photo-4021769.jpeg",
       price: "$12.50"
     },
-    
+    {
+      name: "Parasites",
+      symptoms: ["Weight loss", "Pale combs", "Reduced egg production"],
+      treatment: "Ivermectin Solution",
+      dosage: "0.2ml per kg body weight",
+      image: "https://images.pexels.com/photos/4021769/pexels-photo-4021769.jpeg",
+      price: "$18.75"
+    },
+    {
+      name: "Wound Care",
+      symptoms: ["Cuts", "Pecking injuries", "Bumblefoot"],
+      treatment: "Wound Spray + Antibiotics",
+      dosage: "Clean and spray 2-3 times daily",
+      image: "https://images.pexels.com/photos/4021769/pexels-photo-4021769.jpeg",
+      price: "$9.99"
+    }
   ];
 
   return (
