@@ -49,22 +49,7 @@ const VaccineSection: React.FC<VaccineSectionProps> = ({ navigateToSection, goBa
   ];
 
   const treatments = [
-    {
-      name: "Respiratory Treatment",
-      symptoms: ["Coughing", "Wheezing", "Nasal discharge"],
-      treatment: "Tylan Soluble Powder",
-      dosage: "1g per gallon of water for 3-5 days",
-      image: "https://images.pexels.com/photos/4021769/pexels-photo-4021769.jpeg",
-      price: "$15.99"
-    },
-    {
-      name: "Digestive Issues",
-      symptoms: ["Diarrhea", "Loss of appetite", "Dehydration"],
-      treatment: "Corid (Amprolium)",
-      dosage: "1 tsp per gallon of water for 5 days",
-      image: "https://images.pexels.com/photos/4021769/pexels-photo-4021769.jpeg",
-      price: "$12.50"
-    },
+    
     {
       name: "Parasites",
       symptoms: ["Weight loss", "Pale combs", "Reduced egg production"],
