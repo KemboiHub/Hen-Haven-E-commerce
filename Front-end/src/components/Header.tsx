@@ -196,18 +196,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, 
   );
 };
   // handle checkout: opens payment form with pre-filled user phone
-  const handleCheckout = () => {
-    if (!isLoggedIn) {
-      setShowLoginModal(true);
-      setShowCart(false);
-      return;
-    }
-
-    if (!cart || cart.length === 0 || !total || total <= 0) {
-      setPaymentMessage('Cart is empty');
-      return;
-    }
-
+ 
     // Get phone from user profile (must have been provided at signup)
     const profilePhoneRaw = (user as any)?.phone || (user as any)?.phoneNumber || (user as any)?.mobile || (user as any)?.contact;
     if (!profilePhoneRaw) {
