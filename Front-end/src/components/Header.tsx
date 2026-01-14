@@ -219,16 +219,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ initialPhone, initialAmount, 
     }
 
     // Normalize phone formats: +2547..., 07..., 2547...
-    let phone = String(profilePhoneRaw).trim().replace(/^\+/, '');
-    if (/^0/.test(phone)) phone = '254' + phone.slice(1);
-
-    // Validate expected Daraja format
-    if (!/^2547\d{8}$/.test(phone)) {
-      setPaymentMessage('Phone on profile is invalid. Please update it to format 2547XXXXXXXX in your account.');
-      setShowCart(false);
-      setShowLoginModal(true);
-      return;
-    }
+    
 
     // Open payment form with pre-filled phone and total
     setShowCart(false);
