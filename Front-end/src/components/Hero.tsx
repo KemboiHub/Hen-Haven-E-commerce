@@ -1,6 +1,5 @@
 import React from 'react';
 import { ArrowRight, Shield, Truck, Award, Phone } from 'lucide-react';
-import poultryImg from '../assets/images/poultry.jpg';
 import { useCart } from '../context/CartContext';
 
 interface HeroProps {
@@ -75,7 +74,7 @@ const Hero: React.FC<HeroProps> = ({ navigateToSection }) => {
             <div className="relative">
               <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
                 <img 
-                  src={poultryImg}
+                  src="https://images.pexels.com/photos/19972937/pexels-photo-19972937.jpeg"
                   alt="Happy chickens on farm"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
