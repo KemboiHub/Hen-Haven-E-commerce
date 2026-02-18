@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as emailjs from '@emailjs/browser';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle, ChevronLeft } from 'lucide-react';
 
 interface ContactSectionProps {
@@ -21,9 +22,61 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission
+    // Send message via EmailJS
+    (async () => {
+      try {
+        setStatus('sending');
+        // Use Vite env vars if provided, otherwise developer placeholders will show in console
+        const serviceId = (import.meta as any).env.VITE_EMAILJS_SERVICE_ID || 'service_w43r2zf';
+        const templateId = (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID || 'template_7mozj1p';
+        const publicKey = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY || 'j9POvbYBMPdvU-ORC';
+
+        const templateParams = {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message
+        };
+
+  // emailjs.send returns a Promise
+  // Log the payload to help debug issues (will not contain secrets beyond the public key)
+  // eslint-disable-next-line no-console
+  console.debug('EmailJS sending', { serviceId, templateId, templateParams });
+  const res = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+  // eslint-disable-next-line no-console
+  console.debug('EmailJS send response', res);
+
+  setStatus('success');
+  setResponseMessage('Message sent — thank you! We will reply within 24 hours.');
+        // clear form
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } catch (err: any) {
+        // eslint-disable-next-line no-console
+        console.error('EmailJS send error:', err);
+        // Attempt to extract a useful message from the error object
+        const errMsg = err?.text || err?.statusText || err?.message || JSON.stringify(err);
+        setStatus('error');
+        setResponseMessage(`Failed to send message. ${errMsg}. Alternatively email info@henhaven.com`);
+      }
+    })();
   };
+
+  // UI state for send progress/result
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [responseMessage, setResponseMessage] = useState<string>('');
+
+  useEffect(() => {
+    // Initialize EmailJS SDK once on component mount
+    try {
+      emailjs.init('j9POvbYBMPdvU-ORC'); // 🔑 Replace with your EmailJS public key if needed
+    } catch (err) {
+      // If initialization fails, we don't want the whole component to crash
+      // Errors will be visible in the console for debugging
+      // eslint-disable-next-line no-console
+      console.error('Failed to initialize EmailJS', err);
+    }
+  }, []);
 
   const contactInfo = [
     {
@@ -94,6 +147,16 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
             <div id="send-message-section" className="bg-sage-50 p-8 rounded-2xl">
               <h3 className="text-2xl font-bold text-sage-800 mb-6">Send us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* status message */}
+                {status !== 'idle' && (
+                  <div
+                    role="status"
+                    aria-live="polite"
+                    className={`p-3 rounded-md ${status === 'success' ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}
+                  >
+                    {responseMessage}
+                  </div>
+                )}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sage-700 font-medium mb-2">
@@ -179,10 +242,11 @@ const ContactSection: React.FC<ContactSectionProps> = ({ goBack }) => {
 
                 <button
                   type="submit"
-                  className="w-full bg-sage-600 text-white py-4 px-8 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center group"
+                  className="w-full bg-sage-600 text-white py-4 px-8 rounded-lg font-semibold hover:bg-sage-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center group disabled:opacity-60"
+                  disabled={status === 'sending'}
                 >
-                  <Send className="h-5 w-5 mr-2 group-hover:translate-x-1 transition-transform" />
-                  Send Message
+                  <Send className="h-5 w-5 mr-2" />
+                  {status === 'sending' ? 'Sending…' : 'Send Message'}
                 </button>
               </form>
             </div>
