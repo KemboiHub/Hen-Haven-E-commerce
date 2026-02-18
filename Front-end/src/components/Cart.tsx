@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import LoginModal from './LoginModal';
 import { Trash2, Plus, Minus } from 'lucide-react';
 
 interface CartProps {
@@ -8,6 +10,8 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
   const { cart, total, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { isLoggedIn } = useAuth();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   if (cart.length === 0) {
     return (
@@ -27,8 +31,9 @@ const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-4">
-      <div className="max-w-4xl mx-auto">
+    <>
+      <div className="min-h-screen bg-gray-50 py-16 px-4">
+        <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-sage-800 mb-8">Your Cart</h1>
 
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -89,14 +94,26 @@ const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
               Clear Cart
             </button>
             <button
+              onClick={() => {
+                if (!isLoggedIn) {
+                  setShowLoginModal(true);
+                  return;
+                }
+                // User is logged in — navigate to checkout section.
+                // Assumption: the app handles a 'checkout' section via navigateToSection.
+                navigateToSection?.('checkout');
+              }}
               className="flex-1 bg-sage-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-sage-700 transition-colors"
             >
               Proceed to Checkout
             </button>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
+    </>
   );
 };
 

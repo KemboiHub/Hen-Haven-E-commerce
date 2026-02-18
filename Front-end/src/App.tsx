@@ -43,7 +43,7 @@ function App() {
       let current = 'home';
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
-        if (element && element.offsettop <= scrollPosition) {
+        if (element && element.offsetTop <= scrollPosition) {
            if (sectionId === 'home' || sectionId === 'featured-products') {
              current = 'home';
            }else {
