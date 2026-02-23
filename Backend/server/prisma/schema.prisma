@@ -6,19 +6,78 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  phone     String?
+  password  String
+  role      String   @default("customer")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders    Order[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String?
+  priceCents  Int
+  currency    String   @default("KES")
+  stock       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id               String   @id @default(uuid())
+  userId           String? 
+  totalCents       Int
+  currency         String   @default("KES")
+  status           String   @default("pending")
+  checkoutRequestId String?  @unique
+  merchantRequestId String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  items            OrderItem[]
+  paymentCallbacks PaymentCallback[]
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  productId String
+  unitPrice Int
+  quantity  Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+}
+
+model PaymentCallback {
+  id         String   @id @default(uuid())
+  orderId    String?
+  raw        String
+  resultCode Int
+  resultDesc String
+  createdAt  DateTime @default(now())
+
+  order      Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+}
 
 model MpesaTransaction {
-
-  id                String   @id @default(uuid())
-
-  phone             String
-  amount            Float
-
-  checkoutRequestId String   @unique
+  id                 String   @id @default(uuid())
+  phone              String
+  amount             Float
+  checkoutRequestId  String   @unique
   mpesaReceiptNumber String?
-
-  status            String   // PENDING, SUCCESS, FAILED
-
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  status             String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }

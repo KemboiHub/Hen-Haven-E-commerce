@@ -3,10 +3,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.stkPush = void 0;
 const axios_1 = __importDefault(require("axios"));
 const prismaClient_1 = __importDefault(require("../prismaClient"));
 const darajaAuth_1 = require("../utils/darajaAuth");
 const timestamp_1 = require("../utils/timestamp");
+const BASE_URL = "http://localhost:5000"; // backend URL
+const stkPush = async (data) => {
+    const res = await fetch(`${BASE_URL}/mpesa/stkpush`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+    return res.json();
+};
+exports.stkPush = stkPush;
 class MpesaService {
     async stkPush(phone, amount) {
         const token = await (0, darajaAuth_1.getAccessToken)();
