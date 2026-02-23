@@ -3,6 +3,16 @@ import prisma from "../prismaClient";
 import { getAccessToken } from "../utils/darajaAuth";
 import { getTimestamp } from "../utils/timestamp";
 
+const BASE_URL = "http://localhost:5000"; // backend URL
+
+export const stkPush = async (data: any) => {
+  const res = await fetch(`${BASE_URL}/mpesa/stkpush`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+};
 class MpesaService {
 
   async stkPush(phone: string, amount: number) {
