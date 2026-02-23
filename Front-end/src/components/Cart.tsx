@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import LoginModal from './LoginModal';
 import { Trash2, Plus, Minus } from 'lucide-react';
+import mpesaService from "../services/mpesaService";
 
 interface CartProps {
   navigateToSection?: (section: string) => void;
@@ -12,6 +13,8 @@ const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
   const { cart, total, removeFromCart, updateQuantity, clearCart } = useCart();
   const { isLoggedIn } = useAuth();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
 
   if (cart.length === 0) {
     return (
@@ -90,6 +93,7 @@ const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
             <button
               onClick={clearCart}
               className="flex-1 bg-red-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-600 transition-colors"
+              disabled={loading}
             >
               Clear Cart
             </button>
@@ -99,16 +103,65 @@ const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
                   setShowLoginModal(true);
                   return;
                 }
-                // User is logged in — navigate to checkout section.
-                // Assumption: the app handles a 'checkout' section via navigateToSection.
-                navigateToSection?.('checkout');
+                // User is logged in — initiate MPESA payment via backend
+                (async () => {
+                  setMessage(null);
+
+                  try {
+                    setLoading(true);
+
+                    let phone = window.prompt(
+                      "Enter your phone number (07XXXXXXXX)"
+                    );
+
+                    if (!phone) {
+                      setMessage("Phone number required");
+                      return;
+                    }
+
+                    phone = phone.trim();
+
+                    if (phone.startsWith("0"))
+                      phone = "254" + phone.slice(1);
+
+                    if (phone.startsWith("+"))
+                      phone = phone.slice(1);
+
+                    const amount = Math.round(total);
+
+                    const accountReference = `ORDER-${Date.now()}`;
+
+                    const result = await mpesaService.initiateSTKPush({
+                      phone,
+                      amount,
+                      accountReference,
+                    });
+
+                    if (result.success) {
+                      setMessage("STK Push sent. Check your phone.");
+                    } else {
+                      setMessage(result.message);
+                    }
+
+                  } catch (err) {
+                    setMessage("Payment failed");
+                  } finally {
+                    setLoading(false);
+                  }
+                })();
               }}
-              className="flex-1 bg-sage-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-sage-700 transition-colors"
+              disabled={loading}
+              className={"flex-1 py-3 px-6 rounded-lg font-semibold transition-colors " + (loading ? 'bg-sage-400 text-white' : 'bg-sage-600 text-white hover:bg-sage-700')}
             >
               Proceed to Checkout
             </button>
           </div>
         </div>
+        {message && (
+          <div className="mt-4 max-w-4xl mx-auto text-center">
+            <div className="inline-block bg-white p-4 rounded shadow">{message}</div>
+          </div>
+        )}
         </div>
       </div>
 
