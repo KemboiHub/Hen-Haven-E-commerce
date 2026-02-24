@@ -3,8 +3,11 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import LoginModal from './LoginModal';
 import { Trash2, Plus, Minus } from 'lucide-react';
-import mpesaService from "../services/mpesaService";
-
+import { mpesaSe// ...existing code...
+impo// ...existing code...
+expo// ...existing code...
+import { mpesaService } from "../services/mpesaService";
+// ...existing code...
 interface CartProps {
   navigateToSection?: (section: string) => void;
 }
