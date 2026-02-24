@@ -1,0 +1,2 @@
+# Keep local server .gitignore untracked; use the example file instead
+Backend/server/.gitignore
