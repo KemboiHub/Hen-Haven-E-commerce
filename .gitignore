@@ -1,2 +1,3 @@
-# Keep local server .gitignore untracked; use the example file instead
+# Keep local server .gitignore and .env untracked; use the example files instead
 Backend/server/.gitignore
+Backend/server/.env
