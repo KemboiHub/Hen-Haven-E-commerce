@@ -47,19 +47,12 @@ class MpesaService {
       Password: password,
       Timestamp: timestamp,
       TransactionType: "CustomerPayBillOnline",
-      
       Amount: amount,
-
       PartyA: phone,
-
       PartyB: shortcode,
-
       PhoneNumber: phone,
-
-      CallBackURL: process.env.MPESA_CALLBACK_URL,
-
+      CallbackUrl: callbackUrl,
       AccountReference: "HenHaven",
-
       TransactionDesc: "Payment"
     };
 
