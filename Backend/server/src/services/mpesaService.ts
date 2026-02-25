@@ -40,17 +40,14 @@ class MpesaService {
     const password = Buffer
       .from(shortcode + passkey + timestamp)
       .toString("base64");
-
+    const callbackUrl = process.env.MPESA_CALLBACK_URL!;
     const payload = {
 
-      BusinessShortCode: shortcode,
-
+      BusinessShortCode: shortcode, 
       Password: password,
-
       Timestamp: timestamp,
-
       TransactionType: "CustomerPayBillOnline",
-
+      
       Amount: amount,
 
       PartyA: phone,
