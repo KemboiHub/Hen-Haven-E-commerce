@@ -17,7 +17,6 @@ router.get('/:id', async (req, res) => {
   if (!p) return res.status(404).json({ error: 'Not found' });
   return res.json({ ...p, price: (p.priceCents / 100).toFixed(2) });
 });
-
 // POST /api/products (admin)
 router.post('/', requireAuth, async (req: any, res: any) => {
   const { title, slug, description, priceCents, stock } = req.body;
