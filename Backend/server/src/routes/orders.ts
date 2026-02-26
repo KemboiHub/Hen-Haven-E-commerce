@@ -24,7 +24,6 @@ router.post('/', requireAuth, async (req: AuthRequest, res) => {
       totalCents += p.priceCents * qty;
       orderItemsData.push({ productId: p.id, unitPrice: p.priceCents, quantity: qty });
     }
-
     const order = await prisma.order.create({
       data: {
         userId: req.userId,
