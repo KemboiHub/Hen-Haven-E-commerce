@@ -130,7 +130,7 @@ const Cart: React.FC<CartProps> = ({ navigateToSection }) => {
                     const amount = Math.round(total);
 
                     const accountReference = `ORDER-${Date.now()}`;
-
+                    const mpesaService = await mpesaService.init();
                     const result = await mpesaService.initiateSTKPush({
                       phone,
                       amount,
