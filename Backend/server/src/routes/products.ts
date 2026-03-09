@@ -27,15 +27,6 @@ router.post('/', requireAuth, async (req: any, res: any) => {
     console.error(err);
     return res.status(500).json({ error: 'Server error' });
   }
-router.post('/', requireAuth, async (req: any, res: any) => {
-  const { title, slug, description, priceCents, stock } = req.body;
-  try {
-    const product = await prisma.product.create({ data: { title, slug, description, priceCents, stock } });
-    return res.status(201).json(product);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: 'Server error' });
-  }
 });
 
 export default router;
