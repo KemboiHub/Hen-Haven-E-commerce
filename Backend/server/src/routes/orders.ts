@@ -56,6 +56,9 @@ router.post('/', requireAuth, async (req: AuthRequest, res) => {
 router.post('/callback', express.json(), async (req, res) => {
   try {
     const body = req.body;
+router.post('/callback', express.json(), async (req, res) => {
+  try {
+    const body = req.body;
     // Attempt to parse known fields
     const callback = body?.Body?.stkCallback;
     if (!callback) {
