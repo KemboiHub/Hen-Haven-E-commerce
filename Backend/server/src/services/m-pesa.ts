@@ -41,9 +41,6 @@ export const stkPush = async ({ phone, amount, accountReference }: { phone: stri
 };
 
 export const handleCallback = async (data: any) => {  
-  const token = await getAccessToken();
-  const url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';    
-  
   const resp = await axios.post(url, body, { headers: { Authorization: `Bearer ${token}` } });
   return resp.data;
 };
