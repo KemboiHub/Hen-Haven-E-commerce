@@ -84,8 +84,9 @@ class MpesaService {
 
     return response.data;
   }
+  async getTransactionStatus(checkoutRequestId: string) {
 
-
+    const token = await getAccessToken();
   async handleCallback(callbackBody: any) {
 
     const stk = callbackBody.Body.stkCallback;
