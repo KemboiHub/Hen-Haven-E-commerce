@@ -20,7 +20,7 @@ const stkPush = async (req, res) => {
 };
 exports.stkPush = stkPush;
 const mpesaCallback = async (req, res) => {
-    try {
+    try{
         await mpesaService_1.default.handleCallback(req.body);
         res.json({ ResultCode: 0 });
     }
