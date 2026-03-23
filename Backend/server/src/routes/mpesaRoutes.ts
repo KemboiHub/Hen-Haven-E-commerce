@@ -1,8 +1,9 @@
-import { Router } from "express";
-import { stkPush } from "../controllers/mpesaController";
+import express from "express";
+import { initiateSTK, mpesaCallback } from "../controllers/mpesaController";
 
-const router = Router();
-router.post("/stkpush", stkPush);
+const router = express.Router();
+
+router.post("/stk", initiateSTK);
+router.post("/callback", mpesaCallback);
 
 export default router;
-
