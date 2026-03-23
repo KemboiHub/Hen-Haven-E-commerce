@@ -1,41 +1,33 @@
 import { Request, Response } from "express";
-import mpesaService from "../services/mpesaService";
+import { stkPush } from "../services/mpesaService";
+import prisma from "../config/prisma";
 
-export const stkPush = async (req: Request, res: Response) => {
+export const initiateSTK = async (req: Request, res: Response) => {
+  const { phone, amount } = req.body;
+  const response = await stkPush(phone, amount);
 
-  try {
+  await prisma.mpesaTransaction.create({
+    data: {
+      phone,
+      amount,
+      checkoutId: response.CheckoutRequestID,
+      merchantReqId: response.MerchantRequestID,
+    },
+  });
 
-    const { phone, amount } = req.body;
-
-    const result = await mpesaService.stkPush(phone, amount);
-
-    res.json(result);
-
-  } catch (error) {
-
-    console.error(error);
-
-    res.status(500).json({
-      error: "STK push failed"
-    });
-  }
+  res.json(response);
 };
-
-
 export const mpesaCallback = async (req: Request, res: Response) => {
+  const data = req.body.Body.stkCallback;
 
-  try {
+  await prisma.mpesaTransaction.update({
+    where: { checkoutId: data.CheckoutRequestID },
+    data: {
+      status: data.ResultCode === 0 ? "SUCCESS" : "FAILED",
+      resultCode: data.ResultCode,
+      resultDesc: data.ResultDesc,
+    },
+  });
 
-  await mpesaService.handleCallback(req.body);
-
-  res.json({ ResultCode: 0 });
-
-  } catch (error) {
-
-    console.error(error);
-
-    res.status(500).json({
-      error: "Callback failed"
-    });
-  }
+  res.json({ message: "ok" });
 };
