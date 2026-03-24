@@ -3,7 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "neondb"
+  provider = "neond  // ...existing code...
+  datasource db {
+    provider = "postgresql" // changed from "neondb"
+    url      = env("DATABASE_URL")
+  }
+  // ...existing code...b"
   url      = env("DATABASE_URL")
 }
 model MpesaTransaction {
