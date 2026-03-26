@@ -22,3 +22,13 @@ export const mpesaCallback = async (req: Request, res: Response) => {
   const data = req.body.Body.stkCallback;
 
   await prisma.mpesaTransaction.update({
+    where: { checkoutId: data.CheckoutRequestID },
+    data: {
+      status: data.ResultCode === 0 ? "SUCCESS" : "FAILED",
+      resultCode: data.ResultCode,
+      resultDesc: data.ResultDesc,
+    },
+  });
+
+  res.json({ message: "ok" });
+};
