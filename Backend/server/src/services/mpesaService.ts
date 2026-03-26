@@ -1,5 +1,4 @@
 
-### Service (services/mpesaService.ts)
 import axios from "axios";
 
 const getAccessToken = async () => {
@@ -19,19 +18,3 @@ export const stkPush = async (phone: string, amount: number) => {
     `${process.env.MPESA_BASE_URL}/mpesa/stkpush/v1/processrequest`,
     {
       BusinessShortCode: process.env.MPESA_SHORTCODE,
-      Password: password,
-      Timestamp: timestamp,
-      TransactionType: "CustomerPayBillOnline",
-      Amount: amount,
-      PartyA: phone,
-      PartyB: process.env.MPESA_SHORTCODE,
-      PhoneNumber: phone,
-      CallBackURL: process.env.MPESA_CALLBACK_URL,
-      AccountReference: "ORDER",
-      TransactionDesc: "Payment",
-    },
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-
-  return res.data;
-};
